@@ -1,4 +1,4 @@
-package ru.diasoft.task01.service;
+package ru.diasoft.spring.service;
 
 public interface TestService {
     void runTest();

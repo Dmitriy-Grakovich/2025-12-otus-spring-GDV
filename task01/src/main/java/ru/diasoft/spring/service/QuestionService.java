@@ -1,6 +1,6 @@
-package ru.diasoft.task01.service;
+package ru.diasoft.spring.service;
 
-import ru.diasoft.task01.domain.Question;
+import ru.diasoft.spring.domain.Question;
 
 import java.util.List;
 

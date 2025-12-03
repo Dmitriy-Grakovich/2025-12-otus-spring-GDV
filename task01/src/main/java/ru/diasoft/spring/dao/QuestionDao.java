@@ -1,6 +1,6 @@
-package ru.diasoft.task01.dao;
+package ru.diasoft.spring.dao;
 
-import ru.diasoft.task01.domain.Question;
+import ru.diasoft.spring.domain.Question;
 
 import java.util.List;
 
