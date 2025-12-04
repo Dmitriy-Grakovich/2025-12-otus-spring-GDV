@@ -1,0 +1,14 @@
+
+base:
+  csvResource: questions.csv
+  limit: 4
+  defaultLocale: en
+  csvResourcePattern: 'questions_{locale}.csv'
+
+spring:
+  messages:
+    basename: messages
+    encoding: UTF-8
+    fallback-to-system-locale: true
+  application:
+    name: tasklesson5
