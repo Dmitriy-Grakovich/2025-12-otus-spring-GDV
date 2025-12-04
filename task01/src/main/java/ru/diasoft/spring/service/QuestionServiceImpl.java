@@ -1,11 +1,13 @@
-package ru.diasoft.task01.service;
+package ru.diasoft.spring.service;
 
-import lombok.AllArgsConstructor;
-import ru.diasoft.task01.dao.QuestionDao;
-import ru.diasoft.task01.domain.Question;
+import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Service;
+import ru.diasoft.spring.dao.QuestionDao;
+import ru.diasoft.spring.domain.Question;
 
 import java.util.List;
-@AllArgsConstructor
+@RequiredArgsConstructor
+@Service
 public class QuestionServiceImpl implements QuestionService {
     private final QuestionDao questionDao;
     @Override

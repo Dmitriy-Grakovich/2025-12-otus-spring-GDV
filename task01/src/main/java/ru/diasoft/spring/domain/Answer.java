@@ -1,4 +1,4 @@
-package ru.diasoft.task01.domain;
+package ru.diasoft.spring.domain;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

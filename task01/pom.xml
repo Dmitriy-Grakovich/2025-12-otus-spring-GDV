@@ -76,7 +76,7 @@
 				<configuration>
 					<archive>
 						<manifest>
-							<mainClass>ru.diasoft.task01.Task01Application</mainClass>
+							<mainClass>ru.diasoft.spring.ApplicationMain</mainClass>
 						</manifest>
 					</archive>
 				</configuration>
@@ -91,7 +91,7 @@
 					</descriptorRefs>
 					<archive>
 						<manifest>
-							<mainClass>ru.diasoft.task01.Task01Application</mainClass>
+							<mainClass>ru.diasoft.spring.ApplicationMain</mainClass>
 						</manifest>
 					</archive>
 				</configuration>

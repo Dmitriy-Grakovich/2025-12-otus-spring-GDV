@@ -1,10 +1,10 @@
-package ru.diasoft.task01.domain;
+package ru.diasoft.spring.domain;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
 
-import java.util.List;
+import java.util.Map;
 
 @Getter
 @Setter
@@ -12,15 +12,15 @@ import java.util.List;
 public class Question {
     private final String text;
 
-    private final List<Answer> answers;
+    private final Map<Integer, Answer> answers;
     private final boolean IsMultiChoice;
 
     @Override
     public String toString() {
         final StringBuilder sb = new StringBuilder();
         sb.append(text).append("\n");
-        for (int i = 0; i < answers.size(); i++) {
-            sb.append(i + 1).append(". ").append(answers.get(i)).append("\n");
+        for (Map.Entry<Integer, Answer> entry : answers.entrySet()) {
+            sb.append(entry.getKey()).append(". ").append(entry.getValue()).append("\n");
         }
         return sb.toString();
     }
