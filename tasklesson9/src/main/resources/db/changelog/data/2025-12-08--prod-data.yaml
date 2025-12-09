@@ -1,0 +1,81 @@
+databaseChangeLog:
+  # Загрузка авторов из CSV
+  - changeSet:
+      id: 2025-12-08--0004--author-data
+      author: dgrakovich
+      context: production
+      runOnChange: true
+      changes:
+        - loadData:
+            primaryKey: id
+            file: 2025-12-08--0002--author.csv
+            relativeToChangelogFile: true
+            separator: ;
+            quotChar: '"'
+            encoding: UTF-8
+            tableName: author
+            columns:
+              - column:
+                  name: id
+                  type: NUMERIC
+              - column:
+                  name: last_name
+                  type: STRING
+              - column:
+                  name: first_name
+                  type: STRING
+              - column:
+                  name: age
+                  type: NUMERIC
+
+  # Загрузка жанров из CSV
+  - changeSet:
+      id: 2025-12-08--0005--genre-data
+      author: dgrakovich
+      context: production
+      runOnChange: true
+      changes:
+        - loadData:
+            primaryKey: id
+            file: 2025-12-08--0002--genre.csv
+            relativeToChangelogFile: true
+            separator: ;
+            quotChar: '"'
+            encoding: UTF-8
+            tableName: genre
+            columns:
+              - column:
+                  name: id
+                  type: NUMERIC
+              - column:
+                  name: name
+                  type: STRING
+
+  # Загрузка книг из CSV
+  - changeSet:
+      id: 2025-12-08--0006--book-data
+      author: dgrakovich
+      context: production
+      runOnChange: true
+      changes:
+        - loadData:
+            primaryKey: id
+            file: 2025-12-08--0002--book.csv
+            relativeToChangelogFile: true
+            separator: ;
+            quotChar: '"'
+            encoding: UTF-8
+            tableName: book
+            columns:
+              - column:
+                  name: id
+                  type: NUMERIC
+              - column:
+                  name: title
+                  type: STRING
+              - column:
+                  name: author_id
+                  type: NUMERIC
+              - column:
+                  name: genre_id
+                  type: NUMERIC
