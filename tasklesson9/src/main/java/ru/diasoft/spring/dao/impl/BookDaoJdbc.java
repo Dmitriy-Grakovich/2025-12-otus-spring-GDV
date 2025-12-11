@@ -12,10 +12,12 @@ import ru.diasoft.spring.dao.BookDao;
 import ru.diasoft.spring.dao.GenreDao;
 import ru.diasoft.spring.domain.Author;
 import ru.diasoft.spring.domain.Book;
+import ru.diasoft.spring.domain.Comment;
 import ru.diasoft.spring.domain.Genre;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -37,12 +39,14 @@ public class BookDaoJdbc implements BookDao {
             // Получаем Author и Genre через DAO
             Author author = authorId != 0 ? authorDao.findById(authorId).orElse(null) : null;
             Genre genre = genreId != 0 ? genreDao.findById(genreId).orElse(null) : null;
+            List<Comment> comments = new ArrayList<>();
 
             return new Book(
                     rs.getLong("id"),
                     rs.getString("title"),
                     author,
-                    genre
+                    genre,
+                    comments
             );
         }
     }
