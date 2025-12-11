@@ -22,14 +22,16 @@ class TestServiceImplTest {
     @Mock
     private QuestionService questionService;
 
-    @InjectMocks
+
     private TestServiceImpl testService;
 
     private List<Question> testQuestions;
 
     @BeforeEach
     void setUp() {
+        // Создаем TestServiceImpl с параметром resultSt
         testService = new TestServiceImpl(questionService, "3");
+
 
         // Создаем тестовые вопросы
         Answer answer1 = new Answer("Answer 1", true);
