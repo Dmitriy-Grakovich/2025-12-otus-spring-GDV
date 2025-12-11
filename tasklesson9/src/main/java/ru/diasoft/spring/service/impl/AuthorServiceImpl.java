@@ -1,6 +1,7 @@
 package ru.diasoft.spring.service.impl;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ru.diasoft.spring.dao.AuthorDao;
@@ -11,11 +12,15 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
-@RequiredArgsConstructor
+
 public class AuthorServiceImpl implements AuthorService {
     
     private final AuthorDao authorDao;
-    
+
+    public AuthorServiceImpl(@Qualifier("AuthorDaoIJPAmpl") AuthorDao authorDao) {
+        this.authorDao = authorDao;
+    }
+
     @Override
     public List<Author> getAllAuthors() {
         return authorDao.findAll();

@@ -1,6 +1,7 @@
 package ru.diasoft.spring.service.impl;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ru.diasoft.spring.dao.GenreDao;
@@ -11,11 +12,15 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
-@RequiredArgsConstructor
+
 public class GenreServiceImpl implements GenreService {
     
     private final GenreDao genreDao;
-    
+
+    public GenreServiceImpl(@Qualifier("GenreDaoJPAImpl") GenreDao genreDao) {
+        this.genreDao = genreDao;
+    }
+
     @Override
     public List<Genre> getAllGenres() {
         return genreDao.findAll();

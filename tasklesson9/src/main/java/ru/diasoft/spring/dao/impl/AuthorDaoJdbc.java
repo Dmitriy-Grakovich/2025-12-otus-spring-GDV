@@ -1,6 +1,7 @@
 package ru.diasoft.spring.dao.impl;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
@@ -18,6 +19,7 @@ import java.util.Optional;
 
 @Repository
 @RequiredArgsConstructor
+@Qualifier("AuthorDaoJdbc")
 public class AuthorDaoJdbc implements AuthorDao {
 
     private final NamedParameterJdbcTemplate jdbcTemplate;

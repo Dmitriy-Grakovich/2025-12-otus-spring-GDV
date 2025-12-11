@@ -1,6 +1,7 @@
 package ru.diasoft.spring.dao.impl;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
@@ -23,12 +24,18 @@ import java.util.Map;
 import java.util.Optional;
 
 @Repository
-@RequiredArgsConstructor
+
 public class BookDaoJdbc implements BookDao {
 
     private final NamedParameterJdbcTemplate jdbcTemplate;
     private final AuthorDao authorDao;
     private final GenreDao genreDao;
+
+    public BookDaoJdbc(NamedParameterJdbcTemplate jdbcTemplate,@Qualifier("AuthorDaoJdbc") AuthorDao authorDao,@Qualifier("GenreDaoJdbc") GenreDao genreDao) {
+        this.jdbcTemplate = jdbcTemplate;
+        this.authorDao = authorDao;
+        this.genreDao = genreDao;
+    }
 
     private class BookRowMapper implements RowMapper<Book> {
         @Override

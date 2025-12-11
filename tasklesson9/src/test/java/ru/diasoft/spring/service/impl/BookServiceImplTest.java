@@ -6,11 +6,14 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.test.annotation.Commit;
 import ru.diasoft.spring.dao.AuthorDao;
 import ru.diasoft.spring.dao.BookDao;
+import ru.diasoft.spring.dao.CommentDao;
 import ru.diasoft.spring.dao.GenreDao;
 import ru.diasoft.spring.domain.Author;
 import ru.diasoft.spring.domain.Book;
+import ru.diasoft.spring.domain.Comment;
 import ru.diasoft.spring.domain.Genre;
 
 import java.util.Collections;
@@ -35,19 +38,23 @@ class BookServiceImplTest {
     @Mock
     private GenreDao genreDao;
 
+    @Mock
+    private CommentDao commentDao;
+
     private BookServiceImpl bookService;
 
     private Author testAuthor;
     private Genre testGenre;
     private Book testBook;
+    private List<Comment> comments;
 
     @BeforeEach
     void setUp() {
-        bookService = new BookServiceImpl(bookDao, authorDao, genreDao);
+        bookService = new BookServiceImpl(bookDao, authorDao, genreDao, commentDao);
 
         testAuthor = new Author(1L, "Leo", "Tolstoy", 82);
         testGenre = new Genre(1L, "Novel");
-        testBook = new Book(1L, "War and Peace", testAuthor, testGenre);
+        testBook = new Book(1L, "War and Peace", testAuthor, testGenre, comments);
     }
 
     @Test
@@ -119,7 +126,7 @@ class BookServiceImplTest {
 
         Author newAuthor = new Author(null, authorFirstName, authorLastName, null);
         Author savedAuthor = new Author(2L, authorFirstName, authorLastName, null);
-        Book expectedBook = new Book(2L, title, savedAuthor, testGenre);
+        Book expectedBook = new Book(2L, title, savedAuthor, testGenre, comments);
 
         when(authorDao.findByFullName(authorFirstName, authorLastName))
                 .thenReturn(Optional.empty());
@@ -150,7 +157,7 @@ class BookServiceImplTest {
 
         Genre newGenre = new Genre(null, genreName);
         Genre savedGenre = new Genre(2L, genreName);
-        Book expectedBook = new Book(2L, title, testAuthor, savedGenre);
+        Book expectedBook = new Book(2L, title, testAuthor, savedGenre, comments);
 
         when(authorDao.findByFullName(authorFirstName, authorLastName))
                 .thenReturn(Optional.of(testAuthor));
@@ -182,7 +189,7 @@ class BookServiceImplTest {
 
         Author newAuthor = new Author(2L, newAuthorFirstName, newAuthorLastName, 59);
         Genre newGenre = new Genre(2L, newGenreName);
-        Book updatedBook = new Book(bookId, newTitle, newAuthor, newGenre);
+        Book updatedBook = new Book(bookId, newTitle, newAuthor, newGenre, comments);
 
         when(bookDao.findById(bookId)).thenReturn(Optional.of(testBook));
         when(authorDao.findByFullName(newAuthorFirstName, newAuthorLastName))
