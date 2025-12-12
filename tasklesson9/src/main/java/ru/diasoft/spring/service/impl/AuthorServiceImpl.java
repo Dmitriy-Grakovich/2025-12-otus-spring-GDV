@@ -40,19 +40,24 @@ public class AuthorServiceImpl implements AuthorService {
         author.setAge(age);
         return authorDao.save(author);
     }
-    
+
     @Override
     @Transactional
     public Author updateAuthor(Long id, String firstName, String lastName, Integer age) {
-        Author author = authorDao.findById(id)
-            .orElseThrow(() -> new IllegalArgumentException("Author not found with id: " + id));
-        
-        author.setFirstName(firstName);
-        author.setLastName(lastName);
-        author.setAge(age);
-        
-        authorDao.update(author);
-        return author;
+        Optional<Author> existingAuthor = authorDao.findById(id);
+
+        if (existingAuthor.isPresent()) {
+            Author author = existingAuthor.get();
+            author.setFirstName(firstName);
+            author.setLastName(lastName);
+            author.setAge(age);
+            authorDao.update(author);
+            return author;
+        } else {
+            // Создаем нового автора
+            Author newAuthor = new Author(null, lastName, firstName, age);
+            return authorDao.save(newAuthor);
+        }
     }
     
     @Override

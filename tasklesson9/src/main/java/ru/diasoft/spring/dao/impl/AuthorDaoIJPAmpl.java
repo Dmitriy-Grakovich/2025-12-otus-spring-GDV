@@ -34,7 +34,7 @@ public class AuthorDaoIJPAmpl implements AuthorDao {
 
     @Override
     public Author save(Author author) {
-        if (author.getId() == 0) {
+        if (author.getId() == null) {
             em.persist(author);
             em.flush();
             return author;
@@ -63,9 +63,26 @@ public class AuthorDaoIJPAmpl implements AuthorDao {
 
     @Override
     public Optional<Author> findByFullName(String firstName, String lastName) {
-        TypedQuery<Author> query = em.createQuery("select s from Author s where s.lastName = :lastName and s.firstName = :firstName ", Author.class);
-        query.setParameter("lastName", firstName);
-        query.setParameter("firstName", lastName);
-        return Optional.ofNullable(query.getSingleResult());
+        try {
+            TypedQuery<Author> query = em.createQuery(
+                    "select s from Author s where s.lastName = :lastName and s.firstName = :firstName",
+                    Author.class
+            );
+            query.setParameter("lastName", lastName);
+            query.setParameter("firstName", firstName);
+            return Optional.ofNullable(query.getSingleResult());
+        } catch (jakarta.persistence.NoResultException e) {
+            return Optional.empty();
+        } catch (jakarta.persistence.NonUniqueResultException e) {
+            // Если найдено несколько авторов, возвращаем первого
+            TypedQuery<Author> query = em.createQuery(
+                    "select s from Author s where s.lastName = :lastName and s.firstName = :firstName",
+                    Author.class
+            );
+            query.setParameter("lastName", lastName);
+            query.setParameter("firstName", firstName);
+            List<Author> authors = query.getResultList();
+            return authors.isEmpty() ? Optional.empty() : Optional.of(authors.get(0));
+        }
     }
 }

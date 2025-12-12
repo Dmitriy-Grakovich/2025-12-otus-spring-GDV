@@ -29,7 +29,14 @@ public class BookDaoJPAImpl implements BookDao {
 
     @Override
     public Book save(Book book) {
-        if(book.getId()==0){
+        if (book.getId() == null) {
+            // Принудительно связываем автора и жанр с текущей сессией
+            if (book.getAuthor() != null && book.getAuthor().getId() != null) {
+                book.setAuthor(em.merge(book.getAuthor()));
+            }
+            if (book.getGenre() != null && book.getGenre().getId() != null) {
+                book.setGenre(em.merge(book.getGenre()));
+            }
             em.persist(book);
             em.flush();
             return book;
@@ -61,14 +68,20 @@ public class BookDaoJPAImpl implements BookDao {
 
     @Override
     public List<Book> findByAuthorId(Long authorId) {
-        TypedQuery<Book> query = em.createQuery("select s from Book s where s.author = :authorId", Book.class);
+        TypedQuery<Book> query = em.createQuery(
+                "select b from Book b where b.author.id = :authorId",
+                Book.class
+        );
         query.setParameter("authorId", authorId);
         return query.getResultList();
     }
 
     @Override
     public List<Book> findByGenreId(Long genreId) {
-        TypedQuery<Book> query = em.createQuery("select s from Book s where s.genre = :genreId", Book.class);
+        TypedQuery<Book> query = em.createQuery(
+                "select b from Book b where b.genre.id = :genreId",
+                Book.class
+        );
         query.setParameter("genreId", genreId);
         return query.getResultList();
     }

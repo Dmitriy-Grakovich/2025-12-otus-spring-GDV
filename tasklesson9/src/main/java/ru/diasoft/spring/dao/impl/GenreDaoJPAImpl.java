@@ -29,7 +29,7 @@ public class GenreDaoJPAImpl implements GenreDao {
 
     @Override
     public Genre save(Genre genre) {
-       if(genre.getId()==0){
+       if(genre.getId()==null){
            em.persist(genre);
            em.flush();
            return genre;
@@ -54,8 +54,12 @@ public class GenreDaoJPAImpl implements GenreDao {
 
     @Override
     public Optional<Genre> findByName(String name) {
-        TypedQuery<Genre> query = em.createQuery("select s from Genre s where s.name = :name", Genre.class);
-        query.setParameter("name", name);
-        return Optional.ofNullable(query.getSingleResult());
+        try {
+            TypedQuery<Genre> query = em.createQuery("select s from Genre s where s.name = :name", Genre.class);
+            query.setParameter("name", name);
+            return Optional.ofNullable(query.getSingleResult());
+        } catch (jakarta.persistence.NoResultException e) {
+            return Optional.empty();
+        }
     }
 }

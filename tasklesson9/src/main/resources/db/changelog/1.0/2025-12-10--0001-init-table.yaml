@@ -24,8 +24,8 @@ databaseChangeLog:
                 name: nickname
                 type: varchar(30)
                 constraints:
-                  nullable: false
-                  unique: true
+                  nullable: true
+                  unique: false
             - column:
                 name: book_id
                 type: bigint

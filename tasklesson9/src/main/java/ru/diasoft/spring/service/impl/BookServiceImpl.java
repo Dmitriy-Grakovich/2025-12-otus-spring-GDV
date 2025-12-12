@@ -77,34 +77,33 @@ public class BookServiceImpl implements BookService {
     @Override
     @Transactional
     public Book updateBook(Long id, String title, String authorFirstName, String authorLastName, String genreName) {
-        Book book = bookDao.findById(id)
-                .orElseThrow(() -> new IllegalArgumentException("Book not found with id: " + id));
+        Optional<Book> existingBook = bookDao.findById(id);
 
-        // Find or create author
-        Author author = authorDao.findByFullName(authorFirstName, authorLastName)
-                .orElseGet(() -> {
-                    Author newAuthor = new Author();
-                    newAuthor.setFirstName(authorFirstName);
-                    newAuthor.setLastName(authorLastName);
-                    newAuthor.setAge(null);
-                    return authorDao.save(newAuthor);
-                });
+        if (existingBook.isPresent()) {
+            Book book = existingBook.get();
+            book.setTitle(title);
 
-        // Find or create genre
-        Genre genre = genreDao.findByName(genreName)
-                .orElseGet(() -> {
-                    Genre newGenre = new Genre();
-                    newGenre.setName(genreName);
-                    return genreDao.save(newGenre);
-                });
+            // Обновляем автора
+            Optional<Author> existingAuthor = authorDao.findByFullName(authorFirstName, authorLastName);
+            Author author = existingAuthor.orElseGet(() -> {
+                Author newAuthor = new Author(null, authorLastName, authorFirstName, null);
+                return authorDao.save(newAuthor);
+            });
+            book.setAuthor(author);
 
-        // Update book
-        book.setTitle(title);
-        book.setAuthor(author);
-        book.setGenre(genre);
+            // Обновляем жанр
+            Optional<Genre> existingGenre = genreDao.findByName(genreName);
+            Genre genre = existingGenre.orElseGet(() -> {
+                Genre newGenre = new Genre(null, genreName);
+                return genreDao.save(newGenre);
+            });
+            book.setGenre(genre);
 
-        bookDao.update(book);
-        return book;
+            return bookDao.save(book);
+        } else {
+            // Если книга не найдена, создаем новую
+            return createBook(title, authorFirstName, authorLastName, genreName);
+        }
     }
 
     @Override

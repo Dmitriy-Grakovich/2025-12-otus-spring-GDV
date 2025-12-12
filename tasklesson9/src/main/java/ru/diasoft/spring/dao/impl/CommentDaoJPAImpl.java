@@ -30,7 +30,7 @@ public class CommentDaoJPAImpl implements CommentDao {
 
     @Override
     public Comment save(Comment comment) {
-        if (comment.getId() == 0) {
+        if (comment.getId() == null) {
             em.persist(comment);
             em.flush();
             return comment;
@@ -57,7 +57,7 @@ public class CommentDaoJPAImpl implements CommentDao {
 
     @Override
     public List<Comment> findByNickname(String nickname) {
-        TypedQuery<Comment> query = em.createQuery("select s from Comment s where s.nickname = :nickname ", Comment.class);
+        TypedQuery<Comment> query = em.createQuery("select s from Comment s where s.nickname = :nickname", Comment.class);
         query.setParameter("nickname", nickname);
         return query.getResultList();
     }

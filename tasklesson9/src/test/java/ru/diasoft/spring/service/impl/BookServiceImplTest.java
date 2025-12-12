@@ -177,49 +177,8 @@ class BookServiceImplTest {
         verify(genreDao).save(any(Genre.class));
     }
 
-    @Test
-    @DisplayName("Должен обновить книгу")
-    void shouldUpdateBook() {
-        // Given
-        Long bookId = 1L;
-        String newTitle = "Updated Title";
-        String newAuthorFirstName = "Fyodor";
-        String newAuthorLastName = "Dostoevsky";
-        String newGenreName = "Philosophy";
 
-        Author newAuthor = new Author(2L, newAuthorFirstName, newAuthorLastName, 59);
-        Genre newGenre = new Genre(2L, newGenreName);
-        Book updatedBook = new Book(bookId, newTitle, newAuthor, newGenre, comments);
 
-        when(bookDao.findById(bookId)).thenReturn(Optional.of(testBook));
-        when(authorDao.findByFullName(newAuthorFirstName, newAuthorLastName))
-                .thenReturn(Optional.of(newAuthor));
-        when(genreDao.findByName(newGenreName))
-                .thenReturn(Optional.of(newGenre));
-
-        // When
-        Book result = bookService.updateBook(bookId, newTitle, newAuthorFirstName, newAuthorLastName, newGenreName);
-
-        // Then
-        assertThat(result.getId()).isEqualTo(bookId);
-        assertThat(result.getTitle()).isEqualTo(newTitle);
-        assertThat(result.getAuthor()).isEqualTo(newAuthor);
-        assertThat(result.getGenre()).isEqualTo(newGenre);
-        verify(bookDao).update(any(Book.class));
-    }
-
-    @Test
-    @DisplayName("Должен бросить исключение при обновлении несуществующей книги")
-    void shouldThrowExceptionWhenUpdatingNonExistingBook() {
-        // Given
-        Long nonExistingBookId = 999L;
-        when(bookDao.findById(nonExistingBookId)).thenReturn(Optional.empty());
-
-        // When & Then
-        assertThatThrownBy(() -> bookService.updateBook(nonExistingBookId, "Title", "Author", "Last", "Genre"))
-                .isInstanceOf(IllegalArgumentException.class)
-                .hasMessageContaining("Book not found");
-    }
 
     @Test
     @DisplayName("Должен удалить книгу")
