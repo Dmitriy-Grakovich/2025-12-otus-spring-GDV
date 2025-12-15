@@ -1,0 +1,8 @@
+id;title;author_id;genre_id
+1;War and Peace;1;1
+2;Anna Karenina;1;1
+3;Crime and Punishment;2;1
+4;The Brothers Karamazov;2;1
+5;The Cherry Orchard;3;3
+6;Eugene Onegin;4;4
+7;Dead Souls;5;5

@@ -1,0 +1,80 @@
+databaseChangeLog:
+- changeSet:
+    id: 2025-12-08--0007--test-author-data
+    author: dgrakovich
+    context: test
+    runOnChange: true
+    changes:
+      - loadData:
+          primaryKey: id
+          file: 2025-12-08--0003--test-author.csv
+          relativeToChangelogFile: true
+          separator: ;
+          quotChar: '"'
+          encoding: UTF-8
+          tableName: author
+          columns:
+            - column:
+                name: id
+                type: NUMERIC
+            - column:
+                name: first_name
+                type: STRING
+            - column:
+                name: last_name
+                type: STRING
+            - column:
+                name: age
+                type: NUMERIC
+
+# Тестовые жанры
+- changeSet:
+    id: 2025-12-08--0008--test-genre-data
+    author: dgrakovich
+    context: test
+    runOnChange: true
+    changes:
+      - loadData:
+          primaryKey: id
+          file: 2025-12-08--0003--test-genre.csv
+          relativeToChangelogFile: true
+          separator: ;
+          quotChar: '"'
+          encoding: UTF-8
+          tableName: genre
+          columns:
+            - column:
+                name: id
+                type: NUMERIC
+            - column:
+                name: name
+                type: STRING
+
+# Тестовые книги
+- changeSet:
+    id: 2025-12-08--0009--test-book-data
+    author: dgrakovich
+    context: test
+    runOnChange: true
+    changes:
+      - loadData:
+          primaryKey: id
+          file: 2025-12-08--0003--test-book.csv
+          relativeToChangelogFile: true
+          separator: ;
+          quotChar: '"'
+          encoding: UTF-8
+          tableName: book
+          columns:
+            - column:
+                name: id
+                type: NUMERIC
+            - column:
+                name: title
+                type: STRING
+            - column:
+                name: author_id
+                type: NUMERIC
+            - column:
+                name: genre_id
+                type: NUMERIC
