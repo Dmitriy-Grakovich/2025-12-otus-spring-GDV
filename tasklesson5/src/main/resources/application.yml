@@ -1,9 +1,8 @@
-
 base:
   csvResource: questions.csv
   limit: 4
   defaultLocale: en
-  csvResourcePattern: 'questions_{locale}.csv'
+  csvResourcePattern: questions_{locale}.csv
 
 spring:
   messages:
@@ -12,3 +11,11 @@ spring:
     fallback-to-system-locale: true
   application:
     name: tasklesson5
+  shell:
+    interactive:
+      enabled: true
+    command:
+      script:
+        enabled: false
+    noninteractive:
+      enabled: false

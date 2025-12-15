@@ -15,7 +15,7 @@ import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
-class QuestionServiceImplTest {
+public class QuestionServiceImplTest {
 
     @Mock
     private QuestionDao questionDao;

@@ -7,7 +7,7 @@ import java.util.Map;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class QuestionTest {
+public class QuestionTest {
 
     @Test
     @DisplayName("Должен корректно создавать вопрос")

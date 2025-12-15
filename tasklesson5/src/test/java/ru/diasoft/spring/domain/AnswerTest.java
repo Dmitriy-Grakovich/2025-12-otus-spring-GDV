@@ -5,7 +5,7 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class AnswerTest {
+public class AnswerTest {
 
     @Test
     @DisplayName("Должен корректно создавать ответ")

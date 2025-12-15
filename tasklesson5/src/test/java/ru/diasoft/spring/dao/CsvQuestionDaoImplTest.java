@@ -14,7 +14,7 @@ import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
-class CsvQuestionDaoImplTest {
+public class CsvQuestionDaoImplTest {
 
     @Mock
     private BaseConfig baseConfig;
