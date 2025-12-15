@@ -80,7 +80,7 @@ public class TestServiceImpl implements TestService {
                         return -1; // неверный формат
                     }
                 })
-                .filter(i -> i >= 0 && i < answers.size()) // проверка диапазона
+                .filter(i -> i >= 1 && i <= answers.size()) // проверка диапазона
                 .allMatch(i -> answers.get(i).isCorrect());
     }
 }
