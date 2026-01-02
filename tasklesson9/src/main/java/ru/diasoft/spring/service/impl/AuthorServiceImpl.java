@@ -1,6 +1,7 @@
 package ru.diasoft.spring.service.impl;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ru.diasoft.spring.dao.AuthorDao;
@@ -11,11 +12,15 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
-@RequiredArgsConstructor
+
 public class AuthorServiceImpl implements AuthorService {
     
     private final AuthorDao authorDao;
-    
+
+    public AuthorServiceImpl(@Qualifier("AuthorDaoIJPAmpl") AuthorDao authorDao) {
+        this.authorDao = authorDao;
+    }
+
     @Override
     public List<Author> getAllAuthors() {
         return authorDao.findAll();
@@ -35,19 +40,24 @@ public class AuthorServiceImpl implements AuthorService {
         author.setAge(age);
         return authorDao.save(author);
     }
-    
+
     @Override
     @Transactional
     public Author updateAuthor(Long id, String firstName, String lastName, Integer age) {
-        Author author = authorDao.findById(id)
-            .orElseThrow(() -> new IllegalArgumentException("Author not found with id: " + id));
-        
-        author.setFirstName(firstName);
-        author.setLastName(lastName);
-        author.setAge(age);
-        
-        authorDao.update(author);
-        return author;
+        Optional<Author> existingAuthor = authorDao.findById(id);
+
+        if (existingAuthor.isPresent()) {
+            Author author = existingAuthor.get();
+            author.setFirstName(firstName);
+            author.setLastName(lastName);
+            author.setAge(age);
+            authorDao.update(author);
+            return author;
+        } else {
+            // Создаем нового автора
+            Author newAuthor = new Author(null, lastName, firstName, age);
+            return authorDao.save(newAuthor);
+        }
     }
     
     @Override

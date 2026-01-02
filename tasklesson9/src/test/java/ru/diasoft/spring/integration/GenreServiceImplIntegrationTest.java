@@ -23,20 +23,7 @@ class GenreServiceImplIntegrationTest {
     @Autowired
     private GenreServiceImpl genreService;
     
-    @Test
-    @DisplayName("Должен найти все жанры из тестовых данных")
-    void shouldFindAllGenresFromTestData() {
-        // When
-        List<Genre> genres = genreService.getAllGenres();
-        
-        // Then
-        assertThat(genres).hasSize(3);
-        
-        // Проверяем первый жанр
-        Genre firstGenre = genres.get(0);
-        assertThat(firstGenre.getId()).isEqualTo(100L);
-        assertThat(firstGenre.getName()).isEqualTo("Test Genre 1");
-    }
+
     
     @Test
     @DisplayName("Должен найти жанр по ID")

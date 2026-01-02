@@ -78,3 +78,30 @@ databaseChangeLog:
             - column:
                 name: genre_id
                 type: NUMERIC
+- changeSet:
+    id: 2025-12-10--0001--comment-data
+    author: dgrakovich
+    context: production
+    runOnChange: true
+    changes:
+        - loadData:
+            primaryKey: id
+            file: 2025-12-10--0001--test--comment.csv
+            relativeToChangelogFile: true
+            separator: ;
+            quotChar: '"'
+            encoding: UTF-8
+            tableName: comment
+            columns:
+                - column:
+                    name: id
+                    type: NUMERIC
+                - column:
+                    name: description
+                    type: STRING
+                - column:
+                    name: nickname
+                    type: STRING
+                - column:
+                    name: book_id
+                    type: NUMERIC

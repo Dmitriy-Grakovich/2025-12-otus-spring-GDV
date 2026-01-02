@@ -2,6 +2,7 @@ package ru.diasoft.spring.service;
 
 import ru.diasoft.spring.domain.Author;
 import ru.diasoft.spring.domain.Book;
+import ru.diasoft.spring.domain.Comment;
 import ru.diasoft.spring.domain.Genre;
 
 import java.util.List;
@@ -17,4 +18,8 @@ public interface BookService {
     List<Book> findBooksByAuthor(String firstName, String lastName);
     List<Book> findBooksByGenre(String genreName);
     Book createBookWithObjects(String title, Author author, Genre genre);
+    List<Comment> getBookComments(Long bookId);
+    void removeCommentFromBook(Long bookId, Long commentId);
+    Comment addCommentToBook(Long bookId, String description, String nickname);
+
 }

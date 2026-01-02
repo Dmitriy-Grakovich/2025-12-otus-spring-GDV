@@ -6,9 +6,11 @@ import org.springframework.shell.standard.ShellMethod;
 import org.springframework.shell.standard.ShellOption;
 import ru.diasoft.spring.domain.Author;
 import ru.diasoft.spring.domain.Book;
+import ru.diasoft.spring.domain.Comment;
 import ru.diasoft.spring.domain.Genre;
 import ru.diasoft.spring.service.AuthorService;
 import ru.diasoft.spring.service.BookService;
+import ru.diasoft.spring.service.CommentService;
 import ru.diasoft.spring.service.GenreService;
 
 import java.util.List;
@@ -21,6 +23,7 @@ public class LibraryCommands {
     private final BookService bookService;
     private final AuthorService authorService;
     private final GenreService genreService;
+    private final CommentService commentService;
 
     // Book Commands (CRUD - обязательные)
 
@@ -49,6 +52,11 @@ public class LibraryCommands {
                 sb.append(", Genre: ").append(book.getGenre().getName());
             } else {
                 sb.append(", Genre: Unknown");
+            }
+            if (book.getComments() != null && !book.getComments().isEmpty()) {
+                sb.append(", Comments: ").append(book.getComments().size()).append(" comment(s)");
+            } else {
+                sb.append(", Comments: None");
             }
 
             sb.append("\n");
@@ -83,6 +91,16 @@ public class LibraryCommands {
             sb.append("Genre: ").append(book.getGenre().getName()).append("\n");
         } else {
             sb.append("Genre: Unknown\n");
+        }
+
+        if (book.getComments() != null && !book.getComments().isEmpty()) {
+            sb.append("Comments:\n");
+            for (Comment comment : book.getComments()) {
+                sb.append("  - ").append(comment.getNickname())
+                        .append(": ").append(comment.getDescription()).append("\n");
+            }
+        } else {
+            sb.append("Comments: None\n");
         }
 
         return sb.toString();
@@ -230,5 +248,106 @@ public class LibraryCommands {
     public String createGenre(@ShellOption String name) {
         Genre genre = genreService.createGenre(name);
         return String.format("Genre created successfully:\nID: %d\nName: %s", genre.getId(), genre.getName());
+    }
+    @ShellMethod(value = "List all comments", key = {"comments", "list-comments"})
+    public String listComments() {
+        List<Comment> comments = commentService.getAllComments();
+        if (comments.isEmpty()) {
+            return "No comments found.";
+        }
+
+        StringBuilder sb = new StringBuilder("Comments:\n");
+        for (int i = 0; i < comments.size(); i++) {
+            Comment comment = comments.get(i);
+            sb.append(i + 1)
+                    .append(". ID: ").append(comment.getId())
+                    .append(", Nickname: '").append(comment.getNickname()).append("'")
+                    .append(", Comment: ").append(comment.getDescription())
+                    .append(", Book: ").append(
+                            comment.getBook() != null ?
+                                    comment.getBook().getTitle() : "No book"
+                    )
+                    .append("\n");
+        }
+        return sb.toString();
+    }
+
+    @ShellMethod(value = "Add comment to book", key = {"add-comment", "create-comment"})
+    public String addComment(
+            @ShellOption Long bookId,
+            @ShellOption String nickname,
+            @ShellOption String description) {
+
+        try {
+            Comment comment = bookService.addCommentToBook(bookId, description, nickname);
+            return String.format(
+                    "Comment added successfully:\nID: %d\nNickname: %s\nComment: %s\nBook: %s",
+                    comment.getId(),
+                    comment.getNickname(),
+                    comment.getDescription(),
+                    comment.getBook() != null ? comment.getBook().getTitle() : "Unknown"
+            );
+        } catch (Exception e) {
+            return "Error adding comment: " + e.getMessage();
+        }
+    }
+
+    @ShellMethod(value = "Remove comment from book", key = {"remove-comment", "delete-comment"})
+    public String removeComment(
+            @ShellOption Long bookId,
+            @ShellOption Long commentId) {
+
+        try {
+            bookService.removeCommentFromBook(bookId, commentId);
+            return "Comment removed successfully";
+        } catch (Exception e) {
+            return "Error removing comment: " + e.getMessage();
+        }
+    }
+
+    @ShellMethod(value = "Get comments for book", key = {"book-comments", "list-book-comments"})
+    public String getBookComments(@ShellOption Long bookId) {
+        try {
+            List<Comment> comments = bookService.getBookComments(bookId);
+            if (comments.isEmpty()) {
+                return "No comments found for this book.";
+            }
+
+            StringBuilder sb = new StringBuilder("Comments for book ID " + bookId + ":\n");
+            for (int i = 0; i < comments.size(); i++) {
+                Comment comment = comments.get(i);
+                sb.append(i + 1)
+                        .append(". ID: ").append(comment.getId())
+                        .append(", Nickname: '").append(comment.getNickname()).append("'")
+                        .append(", Comment: ").append(comment.getDescription())
+                        .append("\n");
+            }
+            return sb.toString();
+        } catch (Exception e) {
+            return "Error: " + e.getMessage();
+        }
+    }
+
+    @ShellMethod(value = "Search comments by nickname", key = {"search-comments", "find-comments"})
+    public String searchComments(@ShellOption String nickname) {
+        List<Comment> comments = commentService.findCommentsByNickname(nickname);
+        if (comments.isEmpty()) {
+            return "No comments found for nickname: " + nickname;
+        }
+
+        StringBuilder sb = new StringBuilder("Found comments:\n");
+        for (int i = 0; i < comments.size(); i++) {
+            Comment comment = comments.get(i);
+            sb.append(i + 1)
+                    .append(". ID: ").append(comment.getId())
+                    .append(", Nickname: '").append(comment.getNickname()).append("'")
+                    .append(", Comment: ").append(comment.getDescription())
+                    .append(", Book: ").append(
+                            comment.getBook() != null ?
+                                    comment.getBook().getTitle() : "No book"
+                    )
+                    .append("\n");
+        }
+        return sb.toString();
     }
 }
