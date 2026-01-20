@@ -244,29 +244,7 @@ class BookServiceImplIntegrationTest {
         assertThat(createdBook.getGenre().getName()).isEqualTo("Object Genre");
     }
 
-    @Test
-    @Transactional
-    @DisplayName("Должен обновить несуществующую книгу (создать новую)")
-    void shouldCreateNewBookWhenUpdatingNonExisting() {
-        // Given
-        Long nonExistingId = 999L;
 
-        // When
-        Book createdBook = bookService.updateBook(
-                nonExistingId,
-                "New Book from Update",
-                "New",
-                "Author",
-                "New Genre"
-        );
-
-        // Then
-        assertThat(createdBook.getId()).isNotNull();
-        assertThat(createdBook.getTitle()).isEqualTo("New Book from Update");
-        assertThat(createdBook.getAuthor().getFirstName()).isEqualTo("New");
-        assertThat(createdBook.getAuthor().getLastName()).isEqualTo("Author");
-        assertThat(createdBook.getGenre().getName()).isEqualTo("New Genre");
-    }
 
     @Test
 

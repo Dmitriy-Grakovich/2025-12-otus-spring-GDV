@@ -3,55 +3,73 @@ package ru.diasoft.spring.service.impl;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import ru.diasoft.spring.dao.CommentDao;
 import ru.diasoft.spring.domain.Comment;
+import ru.diasoft.spring.repository.CommentRepository;
 import ru.diasoft.spring.service.CommentService;
 
 import java.util.List;
 import java.util.Optional;
+
 @Service
 @RequiredArgsConstructor
+@Transactional(readOnly = true)
 public class CommentServiceImpl implements CommentService {
-    private final CommentDao commentDao;
+    private final CommentRepository commentRepository;
 
+    @Override
     public List<Comment> getAllComments() {
-        return commentDao.findAll();
+        return commentRepository.findAll();
     }
 
+    @Override
     public Optional<Comment> getCommentById(Long id) {
-        return commentDao.findById(id);
+        return commentRepository.findByIdWithBook(id);
     }
 
+    @Override
     @Transactional
     public Comment createComment(String description, String nickname) {
         Comment comment = new Comment();
         comment.setDescription(description);
         comment.setNickname(nickname);
-        return commentDao.save(comment);
+        return commentRepository.save(comment);
     }
 
+    @Override
     @Transactional
     public Comment updateComment(Long id, String description, String nickname) {
-        Comment comment = commentDao.findById(id)
-                .orElseThrow(() -> new IllegalArgumentException("Comment not found with id: " + id));
-        comment.setDescription(description);
-        comment.setNickname(nickname);
-        commentDao.update(comment);
-        return comment;
+        return commentRepository.findById(id)
+                .map(comment -> {
+                    comment.setDescription(description);
+                    comment.setNickname(nickname);
+                    return commentRepository.save(comment);
+                })
+                .orElseGet(() -> {
+                    Comment newComment = new Comment();
+                    newComment.setId(id);
+                    newComment.setDescription(description);
+                    newComment.setNickname(nickname);
+                    return commentRepository.save(newComment);
+                });
     }
 
+    @Override
     @Transactional
     public void deleteComment(Long id) {
-        commentDao.deleteById(id);
+        commentRepository.deleteById(id);
     }
 
+    @Override
     public List<Comment> findCommentsByNickname(String nickname) {
-        return commentDao.findByNickname(nickname);
+        // This method needs to be implemented in the repository if needed
+        // For now, we'll filter in memory (not efficient for large datasets)
+        return commentRepository.findAll().stream()
+                .filter(comment -> nickname.equalsIgnoreCase(comment.getNickname()))
+                .toList();
     }
 
+    @Override
     public List<Comment> findCommentsByBookId(Long bookId) {
-        // Этот метод нужно будет реализовать в DAO или здесь с использованием EntityManager
-        // Пока оставим заглушку
-        throw new UnsupportedOperationException("Not implemented yet");
+        return commentRepository.findByBookId(bookId);
     }
 }

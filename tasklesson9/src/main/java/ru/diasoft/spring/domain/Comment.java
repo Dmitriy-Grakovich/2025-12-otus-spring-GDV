@@ -21,4 +21,6 @@ public class Comment {
     @ManyToOne
     @JoinColumn(name = "book_id")
     private Book book; // Добавляем связь с книгой
+
+
 }
