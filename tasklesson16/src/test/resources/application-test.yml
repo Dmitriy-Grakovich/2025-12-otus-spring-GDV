@@ -1,6 +1,11 @@
 
 spring:
-
+  application:
+    name: tasklesson16-test
+  
+  server:
+    servlet:
+      context-path: /api
 
   datasource:
     url: jdbc:h2:mem:testdb;DB_CLOSE_DELAY=-1;MODE=MySQL
@@ -16,8 +21,6 @@ spring:
     enabled: true
     change-log: classpath:/db/changelog/db.changelog-master.yaml
     contexts: test
-  main:
-    web-application-type: none
 
 
 

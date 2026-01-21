@@ -1,0 +1,63 @@
+databaseChangeLog:
+  - changeSet:
+      id: 2025-12-21--0001-insert-test-users
+      author: dgrakovich
+      changes:
+        - insert:
+            tableName: consumer
+            columns:
+              - column:
+                  name: id
+                  value: 1
+              - column:
+                  name: username
+                  value: user
+              - column:
+                  name: password
+                  # Пароль: user (BCrypt encoded)
+                  value: $2a$10$Xl0yhvzLIaJCDdKBS0Lld.ksK7c2Zytg/ZKFdtIYYQUv8rUfvCR4W
+        - insert:
+            tableName: consumer
+            columns:
+              - column:
+                  name: id
+                  value: 2
+              - column:
+                  name: username
+                  value: admin
+              - column:
+                  name: password
+                  # Пароль: admin (BCrypt encoded)
+                  value: $2a$10$fFLij9aYgaNCAv3uDnYQq.bGk4xqF7N2zB6XlO9tL1pD1RZz0lJ1C
+
+  - changeSet:
+      id: 2025-12-21--0002-insert-user-roles
+      author: dgrakovich
+      changes:
+        - insert:
+            tableName: user_role
+            columns:
+              - column:
+                  name: user_id
+                  value: 1
+              - column:
+                  name: roles
+                  value: USER
+        - insert:
+            tableName: user_role
+            columns:
+              - column:
+                  name: user_id
+                  value: 2
+              - column:
+                  name: roles
+                  value: ADMIN
+        - insert:
+            tableName: user_role
+            columns:
+              - column:
+                  name: user_id
+                  value: 2
+              - column:
+                  name: roles
+                  value: USER

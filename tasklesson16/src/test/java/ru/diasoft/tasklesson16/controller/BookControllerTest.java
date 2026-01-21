@@ -9,6 +9,7 @@ import org.springframework.context.annotation.Import;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import ru.diasoft.tasklesson16.config.TestConfig;
+import ru.diasoft.tasklesson16.config.WebMvcTestSecurityConfig;
 import ru.diasoft.tasklesson16.controller.dto.AuthorDto;
 import ru.diasoft.tasklesson16.controller.dto.BookDto;
 import ru.diasoft.tasklesson16.controller.dto.GenreDto;
@@ -26,7 +27,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 @WebMvcTest(BookController.class)
-@Import(TestConfig.class)
+@Import({TestConfig.class, WebMvcTestSecurityConfig.class})
 class BookControllerTest {
 
     @Autowired
