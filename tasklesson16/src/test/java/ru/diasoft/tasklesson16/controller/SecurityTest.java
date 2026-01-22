@@ -22,27 +22,24 @@ class SecurityTest {
     private MockMvc mockMvc;
 
     @Test
-    @DisplayName("Неаутентифицированный пользователь должен быть перенаправлен на страницу входа при доступе к /api/books")
-    void whenUnauthenticatedAccessBooks_thenRedirectToLogin() throws Exception {
+    @DisplayName("Неаутентифицированный пользователь должен получить 403 Forbidden при доступе к /api/books")
+    void whenUnauthenticatedAccessBooks_thenForbidden() throws Exception {
         mockMvc.perform(get("/api/books"))
-                .andExpect(status().is3xxRedirection())
-                .andExpect(redirectedUrlPattern("**/login.html"));
+                .andExpect(status().isForbidden());
     }
 
     @Test
-    @DisplayName("Неаутентифицированный пользователь должен быть перенаправлен на страницу входа при доступе к /api/authors")
-    void whenUnauthenticatedAccessAuthors_thenRedirectToLogin() throws Exception {
+    @DisplayName("Неаутентифицированный пользователь должен получить 403 Forbidden при доступе к /api/authors")
+    void whenUnauthenticatedAccessAuthors_thenForbidden() throws Exception {
         mockMvc.perform(get("/api/authors"))
-                .andExpect(status().is3xxRedirection())
-                .andExpect(redirectedUrlPattern("**/login.html"));
+                .andExpect(status().isForbidden());
     }
 
     @Test
-    @DisplayName("Неаутентифицированный пользователь должен быть перенаправлен на страницу входа при доступе к /api/genres")
-    void whenUnauthenticatedAccessGenres_thenRedirectToLogin() throws Exception {
+    @DisplayName("Неаутентифицированный пользователь должен получить 403 Forbidden при доступе к /api/genres")
+    void whenUnauthenticatedAccessGenres_thenForbidden() throws Exception {
         mockMvc.perform(get("/api/genres"))
-                .andExpect(status().is3xxRedirection())
-                .andExpect(redirectedUrlPattern("**/login.html"));
+                .andExpect(status().isForbidden());
     }
 
     @Test
@@ -86,65 +83,58 @@ class SecurityTest {
 
     @Test
     @DisplayName("Неаутентифицированный пользователь не должен иметь доступ к POST /api/books")
-    void whenUnauthenticatedPostBook_thenRedirectToLogin() throws Exception {
+    void whenUnauthenticatedPostBook_thenForbidden() throws Exception {
         mockMvc.perform(post("/api/books")
                         .with(csrf()))
-                .andExpect(status().is3xxRedirection())
-                .andExpect(redirectedUrlPattern("**/login.html"));
+                .andExpect(status().isForbidden());
     }
 
     @Test
     @DisplayName("Неаутентифицированный пользователь не должен иметь доступ к PUT /api/books/{id}")
-    void whenUnauthenticatedPutBook_thenRedirectToLogin() throws Exception {
+    void whenUnauthenticatedPutBook_thenForbidden() throws Exception {
         mockMvc.perform(put("/api/books/1")
                         .with(csrf()))
-                .andExpect(status().is3xxRedirection())
-                .andExpect(redirectedUrlPattern("**/login.html"));
+                .andExpect(status().isForbidden());
     }
 
     @Test
     @DisplayName("Неаутентифицированный пользователь не должен иметь доступ к DELETE /api/books/{id}")
-    void whenUnauthenticatedDeleteBook_thenRedirectToLogin() throws Exception {
+    void whenUnauthenticatedDeleteBook_thenForbidden() throws Exception {
         mockMvc.perform(delete("/api/books/1")
                         .with(csrf()))
-                .andExpect(status().is3xxRedirection())
-                .andExpect(redirectedUrlPattern("**/login.html"));
+                .andExpect(status().isForbidden());
     }
 
     @Test
     @DisplayName("Неаутентифицированный пользователь не должен иметь доступ к POST /api/authors")
-    void whenUnauthenticatedPostAuthor_thenRedirectToLogin() throws Exception {
+    void whenUnauthenticatedPostAuthor_thenForbidden() throws Exception {
         mockMvc.perform(post("/api/authors")
                         .with(csrf()))
-                .andExpect(status().is3xxRedirection())
-                .andExpect(redirectedUrlPattern("**/login.html"));
+                .andExpect(status().isForbidden());
     }
 
     @Test
     @DisplayName("Неаутентифицированный пользователь не должен иметь доступ к DELETE /api/authors/{id}")
-    void whenUnauthenticatedDeleteAuthor_thenRedirectToLogin() throws Exception {
+    void whenUnauthenticatedDeleteAuthor_thenForbidden() throws Exception {
         mockMvc.perform(delete("/api/authors/1")
                         .with(csrf()))
-                .andExpect(status().is3xxRedirection())
-                .andExpect(redirectedUrlPattern("**/login.html"));
+                .andExpect(status().isForbidden());
     }
 
     @Test
     @DisplayName("Неаутентифицированный пользователь не должен иметь доступ к POST /api/genres")
-    void whenUnauthenticatedPostGenre_thenRedirectToLogin() throws Exception {
+    void whenUnauthenticatedPostGenre_thenForbidden() throws Exception {
         mockMvc.perform(post("/api/genres")
                         .with(csrf()))
-                .andExpect(status().is3xxRedirection())
-                .andExpect(redirectedUrlPattern("**/login.html"));
+                .andExpect(status().isForbidden());
     }
 
     @Test
     @DisplayName("Неаутентифицированный пользователь не должен иметь доступ к DELETE /api/genres/{id}")
-    void whenUnauthenticatedDeleteGenre_thenRedirectToLogin() throws Exception {
+    void whenUnauthenticatedDeleteGenre_thenForbidden() throws Exception {
         mockMvc.perform(delete("/api/genres/1")
                         .with(csrf()))
-                .andExpect(status().is3xxRedirection())
-                .andExpect(redirectedUrlPattern("**/login.html"));
+                .andExpect(status().isForbidden());
     }
 
 
