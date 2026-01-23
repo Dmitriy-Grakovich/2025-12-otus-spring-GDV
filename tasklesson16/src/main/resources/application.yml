@@ -31,3 +31,8 @@ spring:
     level:
       liquibase: INFO
       ru.diasoft.spring: DEBUG
+
+# JWT Configuration
+jwt:
+  secret: mySecretKeyForJWTTokenGenerationAndValidationMustBeLongEnoughForHS256Algorithm
+  expiration: 86400000 # 24 часа в миллисекундах
