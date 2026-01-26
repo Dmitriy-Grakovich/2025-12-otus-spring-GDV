@@ -1,0 +1,11 @@
+spring:
+  application:
+    name: tasklesson23
+
+server:
+  port: 8080
+
+logging:
+  level:
+    org.springframework.integration: INFO
+    ru.diasoft.tasklesson23: DEBUG
