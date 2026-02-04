@@ -1,6 +1,8 @@
 package ru.diasoft.tasklesson23.controller;
 
-import lombok.RequiredArgsConstructor;
+import io.micrometer.core.instrument.Counter;
+import io.micrometer.core.instrument.MeterRegistry;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.messaging.Message;
 import org.springframework.messaging.MessageChannel;
 import org.springframework.messaging.support.MessageBuilder;
@@ -15,15 +17,27 @@ import java.util.UUID;
 
 // OrderController.java
 
+@Slf4j
 @RestController
 @RequestMapping("/api/orders")
-@RequiredArgsConstructor
 public class OrderController {
 
     private final MessageChannel orderInputChannel;
+    private final Counter orderSubmittedCounter;
+
+    public OrderController(MessageChannel orderInputChannel, MeterRegistry meterRegistry) {
+        this.orderInputChannel = orderInputChannel;
+        this.orderSubmittedCounter = Counter.builder("orders.submitted")
+                .description("Number of orders submitted")
+                .tag("controller", "order")
+                .register(meterRegistry);
+    }
 
     @PostMapping
     public Order submitOrder(@RequestBody OrderRequest request) {
+        orderSubmittedCounter.increment();
+        log.info("Submitting order for customer: {}", request.getCustomerId());
+
         Order order = Order.builder()
                 .orderId(UUID.randomUUID().toString())
                 .customerId(request.getCustomerId())
@@ -42,6 +56,9 @@ public class OrderController {
 
     @GetMapping("/test")
     public Order testOrder() {
+        orderSubmittedCounter.increment();
+        log.info("Submitting test order");
+
         OrderItem item = new OrderItem("prod-123", "Test Product", 2, 50.0);
 
         Order order = Order.builder()
