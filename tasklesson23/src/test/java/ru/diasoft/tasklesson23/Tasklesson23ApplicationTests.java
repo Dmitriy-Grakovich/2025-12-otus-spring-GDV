@@ -7,8 +7,8 @@ import org.springframework.integration.channel.DirectChannel;
 import org.springframework.messaging.Message;
 import org.springframework.messaging.support.MessageBuilder;
 import ru.diasoft.tasklesson23.domain.Order;
-import ru.diasoft.tasklesson23.domain.OrderItem;
 import ru.diasoft.tasklesson23.domain.OrderStatus;
+import ru.diasoft.tasklesson23.dto.OrderItemDto;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -29,7 +29,15 @@ class Tasklesson23ApplicationTests {
 
 	@Test
 	void sendTestOrder() {
-		OrderItem item = new OrderItem("prod-123", "Test Product", 2, 50.0);
+		// Создаем OrderItemDto (как будто получили от OrderItem Service)
+		OrderItemDto item = OrderItemDto.builder()
+				.id(UUID.randomUUID().toString())
+				.productId("prod-123")
+				.productName("Test Product")
+				.quantity(2)
+				.price(50.0)
+				.totalPrice(100.0)
+				.build();
 
 		Order order = Order.builder()
 				.orderId(UUID.randomUUID().toString())

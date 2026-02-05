@@ -10,6 +10,7 @@
         <module name="task01" />
         <module name="spring" />
         <module name="spring (1)" />
+        <module name="orderitem-service" />
       </profile>
       <profile name="Annotation profile for tasklesson23" enabled="true">
         <sourceOutputDir name="target/generated-sources/annotations" />
@@ -27,6 +28,7 @@
   </component>
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
+      <module name="orderitem-service" options="-parameters" />
       <module name="spring" options="-parameters" />
       <module name="spring (1)" options="-parameters" />
       <module name="tasklesson16" options="-parameters" />

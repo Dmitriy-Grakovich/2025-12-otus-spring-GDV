@@ -1,6 +1,7 @@
 package ru.diasoft.tasklesson23.domain;
 
 import lombok.*;
+import ru.diasoft.tasklesson23.dto.OrderItemDto;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -12,7 +13,7 @@ import java.util.List;
 public class Order {
     private String orderId;
     private String customerId;
-    private List<OrderItem> items;
+    private List<OrderItemDto> items;
     private Double totalAmount;
     private OrderStatus status;
     private String shippingAddress;
