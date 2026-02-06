@@ -7,9 +7,9 @@ server:
 
 logging:
   level:
-    ru.diasoft.orderitemservice: DEBUG
+    ru.diasoft.orderitemservice: INFO
   pattern:
-    console: "%d{HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n"
+    console: "%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n"
 
 management:
   endpoints:
