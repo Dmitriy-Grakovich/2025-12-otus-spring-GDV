@@ -1,0 +1,192 @@
+2026-02-05 16:04:11 - Starting Tasklesson23Application using Java 17.0.14 with PID 16108 (C:\Users\dgrakovich\java\2025-12-otus-spring-GDV\tasklesson23\target\classes started by dgrakovich in C:\Users\dgrakovich\java\2025-12-otus-spring-GDV)
+2026-02-05 16:04:11 - Running with Spring Boot v3.5.6, Spring v6.2.11
+2026-02-05 16:04:11 - No active profile set, falling back to 1 default profile: "default"
+2026-02-05 16:04:13 - No bean named 'integrationHeaderChannelRegistry' has been explicitly defined. Therefore, a default DefaultHeaderChannelRegistry will be created.
+2026-02-05 16:04:13 - Tomcat initialized with port 8080 (http)
+2026-02-05 16:04:13 - Starting service [Tomcat]
+2026-02-05 16:04:13 - Starting Servlet engine: [Apache Tomcat/10.1.46]
+2026-02-05 16:04:14 - Initializing Spring embedded WebApplicationContext
+2026-02-05 16:04:14 - Root WebApplicationContext: initialization completed in 2156 ms
+2026-02-05 16:04:15 - Exposing 8 endpoints beneath base path '/actuator'
+2026-02-05 16:04:15 - Adding {message-handler:orderEventSubscriber.serviceActivator} as a subscriber to the 'orderEventOutputChannel' channel
+2026-02-05 16:04:15 - Channel 'tasklesson23.orderEventOutputChannel' has 1 subscriber(s).
+2026-02-05 16:04:15 - started bean 'orderEventSubscriber.serviceActivator'
+2026-02-05 16:04:15 - Adding {service-activator} as a subscriber to the 'orderInputChannel' channel
+2026-02-05 16:04:15 - Channel 'tasklesson23.orderInputChannel' has 1 subscriber(s).
+2026-02-05 16:04:15 - started bean 'orderProcessingFlow.org.springframework.integration.config.ConsumerEndpointFactoryBean#0'; defined in: 'class path resource [ru/diasoft/tasklesson23/config/OrderIntegrationConfig.class]'; from source: 'bean method orderProcessingFlow'
+2026-02-05 16:04:15 - Adding {router} as a subscriber to the 'orderProcessingFlow.channel#1' channel
+2026-02-05 16:04:15 - Channel 'tasklesson23.orderProcessingFlow.channel#1' has 1 subscriber(s).
+2026-02-05 16:04:15 - started bean 'orderProcessingFlow.org.springframework.integration.config.ConsumerEndpointFactoryBean#1'; defined in: 'class path resource [ru/diasoft/tasklesson23/config/OrderIntegrationConfig.class]'; from source: 'bean method orderProcessingFlow'
+2026-02-05 16:04:15 - Adding {bridge} as a subscriber to the 'orderProcessingFlow.subFlow#0.channel#0' channel
+2026-02-05 16:04:15 - Channel 'tasklesson23.orderProcessingFlow.subFlow#0.channel#0' has 1 subscriber(s).
+2026-02-05 16:04:15 - started bean 'orderProcessingFlow.subFlow#0.org.springframework.integration.config.ConsumerEndpointFactoryBean#0'; defined in: 'class path resource [ru/diasoft/tasklesson23/config/OrderIntegrationConfig.class]'; from source: 'bean method orderProcessingFlow'
+2026-02-05 16:04:15 - Adding {bridge} as a subscriber to the 'orderProcessingFlow.subFlow#1.channel#0' channel
+2026-02-05 16:04:15 - Channel 'tasklesson23.orderProcessingFlow.subFlow#1.channel#0' has 1 subscriber(s).
+2026-02-05 16:04:15 - started bean 'orderProcessingFlow.subFlow#1.org.springframework.integration.config.ConsumerEndpointFactoryBean#0'; defined in: 'class path resource [ru/diasoft/tasklesson23/config/OrderIntegrationConfig.class]'; from source: 'bean method orderProcessingFlow'
+2026-02-05 16:04:15 - Adding {bridge} as a subscriber to the 'validatedOrderProcessingFlow.subFlow#0.channel#0' channel
+2026-02-05 16:04:15 - Channel 'tasklesson23.validatedOrderProcessingFlow.subFlow#0.channel#0' has 1 subscriber(s).
+2026-02-05 16:04:15 - started bean 'validatedOrderProcessingFlow.subFlow#0.org.springframework.integration.config.ConsumerEndpointFactoryBean#0'; defined in: 'class path resource [ru/diasoft/tasklesson23/config/OrderIntegrationConfig.class]'; from source: 'bean method validatedOrderProcessingFlow'
+2026-02-05 16:04:15 - Adding {service-activator} as a subscriber to the 'validatedOrderProcessingFlow.subFlow#0.channel#2' channel
+2026-02-05 16:04:15 - Channel 'tasklesson23.validatedOrderProcessingFlow.subFlow#0.channel#2' has 1 subscriber(s).
+2026-02-05 16:04:15 - started bean 'validatedOrderProcessingFlow.subFlow#0.org.springframework.integration.config.ConsumerEndpointFactoryBean#1'; defined in: 'class path resource [ru/diasoft/tasklesson23/config/OrderIntegrationConfig.class]'; from source: 'bean method validatedOrderProcessingFlow'
+2026-02-05 16:04:15 - Adding {bridge} as a subscriber to the 'validatedOrderProcessingFlow.subFlow#0.channel#0' channel
+2026-02-05 16:04:15 - Channel 'tasklesson23.validatedOrderProcessingFlow.subFlow#0.channel#0' has 2 subscriber(s).
+2026-02-05 16:04:15 - started bean 'validatedOrderProcessingFlow.subFlow#1.org.springframework.integration.config.ConsumerEndpointFactoryBean#0'; defined in: 'class path resource [ru/diasoft/tasklesson23/config/OrderIntegrationConfig.class]'; from source: 'bean method validatedOrderProcessingFlow'
+2026-02-05 16:04:15 - Adding {service-activator} as a subscriber to the 'validatedOrderProcessingFlow.subFlow#1.channel#1' channel
+2026-02-05 16:04:15 - Channel 'tasklesson23.validatedOrderProcessingFlow.subFlow#1.channel#1' has 1 subscriber(s).
+2026-02-05 16:04:15 - started bean 'validatedOrderProcessingFlow.subFlow#1.org.springframework.integration.config.ConsumerEndpointFactoryBean#1'; defined in: 'class path resource [ru/diasoft/tasklesson23/config/OrderIntegrationConfig.class]'; from source: 'bean method validatedOrderProcessingFlow'
+2026-02-05 16:04:15 - Adding {bridge} as a subscriber to the 'validatedOrderChannel' channel
+2026-02-05 16:04:15 - Channel 'tasklesson23.validatedOrderChannel' has 1 subscriber(s).
+2026-02-05 16:04:15 - started bean 'validatedOrderProcessingFlow.org.springframework.integration.config.ConsumerEndpointFactoryBean#0'; defined in: 'class path resource [ru/diasoft/tasklesson23/config/OrderIntegrationConfig.class]'; from source: 'bean method validatedOrderProcessingFlow'
+2026-02-05 16:04:15 - Adding {aggregator} as a subscriber to the 'orderAggregatorChannel' channel
+2026-02-05 16:04:15 - Channel 'tasklesson23.orderAggregatorChannel' has 1 subscriber(s).
+2026-02-05 16:04:15 - started bean 'aggregationFlow.org.springframework.integration.config.ConsumerEndpointFactoryBean#0'; defined in: 'class path resource [ru/diasoft/tasklesson23/config/OrderIntegrationConfig.class]'; from source: 'bean method aggregationFlow'
+2026-02-05 16:04:15 - Adding {service-activator} as a subscriber to the 'aggregationFlow.channel#1' channel
+2026-02-05 16:04:15 - Channel 'tasklesson23.aggregationFlow.channel#1' has 1 subscriber(s).
+2026-02-05 16:04:15 - started bean 'aggregationFlow.org.springframework.integration.config.ConsumerEndpointFactoryBean#1'; defined in: 'class path resource [ru/diasoft/tasklesson23/config/OrderIntegrationConfig.class]'; from source: 'bean method aggregationFlow'
+2026-02-05 16:04:15 - Adding {bridge} as a subscriber to the 'aggregationFlow.channel#3' channel
+2026-02-05 16:04:15 - Channel 'tasklesson23.aggregationFlow.channel#3' has 1 subscriber(s).
+2026-02-05 16:04:15 - started bean 'aggregationFlow.org.springframework.integration.config.ConsumerEndpointFactoryBean#2'; defined in: 'class path resource [ru/diasoft/tasklesson23/config/OrderIntegrationConfig.class]'; from source: 'bean method aggregationFlow'
+2026-02-05 16:04:15 - Adding {bridge} as a subscriber to the 'paymentResultChannel' channel
+2026-02-05 16:04:15 - Channel 'tasklesson23.paymentResultChannel' has 1 subscriber(s).
+2026-02-05 16:04:15 - started bean 'paymentResultFlow.org.springframework.integration.config.ConsumerEndpointFactoryBean#0'; defined in: 'class path resource [ru/diasoft/tasklesson23/config/OrderIntegrationConfig.class]'; from source: 'bean method paymentResultFlow'
+2026-02-05 16:04:15 - Adding {bridge} as a subscriber to the 'inventoryResultChannel' channel
+2026-02-05 16:04:15 - Channel 'tasklesson23.inventoryResultChannel' has 1 subscriber(s).
+2026-02-05 16:04:15 - started bean 'inventoryResultFlow.org.springframework.integration.config.ConsumerEndpointFactoryBean#0'; defined in: 'class path resource [ru/diasoft/tasklesson23/config/OrderIntegrationConfig.class]'; from source: 'bean method inventoryResultFlow'
+2026-02-05 16:04:15 - Adding {service-activator} as a subscriber to the 'errorChannel' channel
+2026-02-05 16:04:15 - Channel 'tasklesson23.errorChannel' has 1 subscriber(s).
+2026-02-05 16:04:15 - started bean 'errorHandlingFlow.org.springframework.integration.config.ConsumerEndpointFactoryBean#0'; defined in: 'class path resource [ru/diasoft/tasklesson23/config/OrderIntegrationConfig.class]'; from source: 'bean method errorHandlingFlow'
+2026-02-05 16:04:15 - Tomcat started on port 8080 (http) with context path '/'
+2026-02-05 16:04:15 - Started Tasklesson23Application in 5.129 seconds (process running for 6.183)
+2026-02-05 16:04:16 - Initializing Spring DispatcherServlet 'dispatcherServlet'
+2026-02-05 16:04:16 - Initializing Servlet 'dispatcherServlet'
+2026-02-05 16:04:16 - Completed initialization in 1 ms
+2026-02-05 16:06:01 - Commencing graceful shutdown. Waiting for active requests to complete
+2026-02-05 16:06:02 - Graceful shutdown complete
+2026-02-05 16:06:02 - Removing {service-activator} as a subscriber to the 'orderInputChannel' channel
+2026-02-05 16:06:02 - Channel 'tasklesson23.orderInputChannel' has 0 subscriber(s).
+2026-02-05 16:06:02 - stopped bean 'orderProcessingFlow.org.springframework.integration.config.ConsumerEndpointFactoryBean#0'; defined in: 'class path resource [ru/diasoft/tasklesson23/config/OrderIntegrationConfig.class]'; from source: 'bean method orderProcessingFlow'
+2026-02-05 16:06:02 - Removing {router} as a subscriber to the 'orderProcessingFlow.channel#1' channel
+2026-02-05 16:06:02 - Channel 'tasklesson23.orderProcessingFlow.channel#1' has 0 subscriber(s).
+2026-02-05 16:06:02 - stopped bean 'orderProcessingFlow.org.springframework.integration.config.ConsumerEndpointFactoryBean#1'; defined in: 'class path resource [ru/diasoft/tasklesson23/config/OrderIntegrationConfig.class]'; from source: 'bean method orderProcessingFlow'
+2026-02-05 16:06:02 - Removing {bridge} as a subscriber to the 'orderProcessingFlow.subFlow#0.channel#0' channel
+2026-02-05 16:06:02 - Channel 'tasklesson23.orderProcessingFlow.subFlow#0.channel#0' has 0 subscriber(s).
+2026-02-05 16:06:02 - stopped bean 'orderProcessingFlow.subFlow#0.org.springframework.integration.config.ConsumerEndpointFactoryBean#0'; defined in: 'class path resource [ru/diasoft/tasklesson23/config/OrderIntegrationConfig.class]'; from source: 'bean method orderProcessingFlow'
+2026-02-05 16:06:02 - Removing {bridge} as a subscriber to the 'orderProcessingFlow.subFlow#1.channel#0' channel
+2026-02-05 16:06:02 - Channel 'tasklesson23.orderProcessingFlow.subFlow#1.channel#0' has 0 subscriber(s).
+2026-02-05 16:06:02 - stopped bean 'orderProcessingFlow.subFlow#1.org.springframework.integration.config.ConsumerEndpointFactoryBean#0'; defined in: 'class path resource [ru/diasoft/tasklesson23/config/OrderIntegrationConfig.class]'; from source: 'bean method orderProcessingFlow'
+2026-02-05 16:06:02 - Removing {bridge} as a subscriber to the 'validatedOrderProcessingFlow.subFlow#0.channel#0' channel
+2026-02-05 16:06:02 - Channel 'tasklesson23.validatedOrderProcessingFlow.subFlow#0.channel#0' has 1 subscriber(s).
+2026-02-05 16:06:02 - stopped bean 'validatedOrderProcessingFlow.subFlow#0.org.springframework.integration.config.ConsumerEndpointFactoryBean#0'; defined in: 'class path resource [ru/diasoft/tasklesson23/config/OrderIntegrationConfig.class]'; from source: 'bean method validatedOrderProcessingFlow'
+2026-02-05 16:06:02 - Removing {service-activator} as a subscriber to the 'validatedOrderProcessingFlow.subFlow#0.channel#2' channel
+2026-02-05 16:06:02 - Channel 'tasklesson23.validatedOrderProcessingFlow.subFlow#0.channel#2' has 0 subscriber(s).
+2026-02-05 16:06:02 - stopped bean 'validatedOrderProcessingFlow.subFlow#0.org.springframework.integration.config.ConsumerEndpointFactoryBean#1'; defined in: 'class path resource [ru/diasoft/tasklesson23/config/OrderIntegrationConfig.class]'; from source: 'bean method validatedOrderProcessingFlow'
+2026-02-05 16:06:02 - Removing {bridge} as a subscriber to the 'validatedOrderProcessingFlow.subFlow#0.channel#0' channel
+2026-02-05 16:06:02 - Channel 'tasklesson23.validatedOrderProcessingFlow.subFlow#0.channel#0' has 0 subscriber(s).
+2026-02-05 16:06:02 - stopped bean 'validatedOrderProcessingFlow.subFlow#1.org.springframework.integration.config.ConsumerEndpointFactoryBean#0'; defined in: 'class path resource [ru/diasoft/tasklesson23/config/OrderIntegrationConfig.class]'; from source: 'bean method validatedOrderProcessingFlow'
+2026-02-05 16:06:02 - Removing {service-activator} as a subscriber to the 'validatedOrderProcessingFlow.subFlow#1.channel#1' channel
+2026-02-05 16:06:02 - Channel 'tasklesson23.validatedOrderProcessingFlow.subFlow#1.channel#1' has 0 subscriber(s).
+2026-02-05 16:06:02 - stopped bean 'validatedOrderProcessingFlow.subFlow#1.org.springframework.integration.config.ConsumerEndpointFactoryBean#1'; defined in: 'class path resource [ru/diasoft/tasklesson23/config/OrderIntegrationConfig.class]'; from source: 'bean method validatedOrderProcessingFlow'
+2026-02-05 16:06:02 - Removing {bridge} as a subscriber to the 'validatedOrderChannel' channel
+2026-02-05 16:06:02 - Channel 'tasklesson23.validatedOrderChannel' has 0 subscriber(s).
+2026-02-05 16:06:02 - stopped bean 'validatedOrderProcessingFlow.org.springframework.integration.config.ConsumerEndpointFactoryBean#0'; defined in: 'class path resource [ru/diasoft/tasklesson23/config/OrderIntegrationConfig.class]'; from source: 'bean method validatedOrderProcessingFlow'
+2026-02-05 16:06:02 - Removing {aggregator} as a subscriber to the 'orderAggregatorChannel' channel
+2026-02-05 16:06:02 - Channel 'tasklesson23.orderAggregatorChannel' has 0 subscriber(s).
+2026-02-05 16:06:02 - stopped bean 'aggregationFlow.org.springframework.integration.config.ConsumerEndpointFactoryBean#0'; defined in: 'class path resource [ru/diasoft/tasklesson23/config/OrderIntegrationConfig.class]'; from source: 'bean method aggregationFlow'
+2026-02-05 16:06:02 - Removing {service-activator} as a subscriber to the 'aggregationFlow.channel#1' channel
+2026-02-05 16:06:02 - Channel 'tasklesson23.aggregationFlow.channel#1' has 0 subscriber(s).
+2026-02-05 16:06:02 - stopped bean 'aggregationFlow.org.springframework.integration.config.ConsumerEndpointFactoryBean#1'; defined in: 'class path resource [ru/diasoft/tasklesson23/config/OrderIntegrationConfig.class]'; from source: 'bean method aggregationFlow'
+2026-02-05 16:06:02 - Removing {bridge} as a subscriber to the 'aggregationFlow.channel#3' channel
+2026-02-05 16:06:02 - Channel 'tasklesson23.aggregationFlow.channel#3' has 0 subscriber(s).
+2026-02-05 16:06:02 - stopped bean 'aggregationFlow.org.springframework.integration.config.ConsumerEndpointFactoryBean#2'; defined in: 'class path resource [ru/diasoft/tasklesson23/config/OrderIntegrationConfig.class]'; from source: 'bean method aggregationFlow'
+2026-02-05 16:06:02 - Removing {bridge} as a subscriber to the 'paymentResultChannel' channel
+2026-02-05 16:06:02 - Channel 'tasklesson23.paymentResultChannel' has 0 subscriber(s).
+2026-02-05 16:06:02 - stopped bean 'paymentResultFlow.org.springframework.integration.config.ConsumerEndpointFactoryBean#0'; defined in: 'class path resource [ru/diasoft/tasklesson23/config/OrderIntegrationConfig.class]'; from source: 'bean method paymentResultFlow'
+2026-02-05 16:06:02 - Removing {bridge} as a subscriber to the 'inventoryResultChannel' channel
+2026-02-05 16:06:02 - Channel 'tasklesson23.inventoryResultChannel' has 0 subscriber(s).
+2026-02-05 16:06:02 - stopped bean 'inventoryResultFlow.org.springframework.integration.config.ConsumerEndpointFactoryBean#0'; defined in: 'class path resource [ru/diasoft/tasklesson23/config/OrderIntegrationConfig.class]'; from source: 'bean method inventoryResultFlow'
+2026-02-05 16:06:02 - Removing {service-activator} as a subscriber to the 'errorChannel' channel
+2026-02-05 16:06:02 - Channel 'tasklesson23.errorChannel' has 0 subscriber(s).
+2026-02-05 16:06:02 - stopped bean 'errorHandlingFlow.org.springframework.integration.config.ConsumerEndpointFactoryBean#0'; defined in: 'class path resource [ru/diasoft/tasklesson23/config/OrderIntegrationConfig.class]'; from source: 'bean method errorHandlingFlow'
+2026-02-05 16:06:02 - Removing {message-handler:orderEventSubscriber.serviceActivator} as a subscriber to the 'orderEventOutputChannel' channel
+2026-02-05 16:06:02 - Channel 'tasklesson23.orderEventOutputChannel' has 0 subscriber(s).
+2026-02-05 16:06:02 - stopped bean 'orderEventSubscriber.serviceActivator'
+2026-02-05 16:06:15 - Starting Tasklesson23Application using Java 17.0.14 with PID 16184 (C:\Users\dgrakovich\java\2025-12-otus-spring-GDV\tasklesson23\target\classes started by dgrakovich in C:\Users\dgrakovich\java\2025-12-otus-spring-GDV)
+2026-02-05 16:06:15 - Running with Spring Boot v3.5.6, Spring v6.2.11
+2026-02-05 16:06:15 - No active profile set, falling back to 1 default profile: "default"
+2026-02-05 16:06:16 - No bean named 'integrationHeaderChannelRegistry' has been explicitly defined. Therefore, a default DefaultHeaderChannelRegistry will be created.
+2026-02-05 16:06:17 - Tomcat initialized with port 8080 (http)
+2026-02-05 16:06:17 - Starting service [Tomcat]
+2026-02-05 16:06:17 - Starting Servlet engine: [Apache Tomcat/10.1.46]
+2026-02-05 16:06:17 - Initializing Spring embedded WebApplicationContext
+2026-02-05 16:06:17 - Root WebApplicationContext: initialization completed in 2028 ms
+2026-02-05 16:06:18 - Exposing 8 endpoints beneath base path '/actuator'
+2026-02-05 16:06:18 - Adding {message-handler:orderEventSubscriber.serviceActivator} as a subscriber to the 'orderEventOutputChannel' channel
+2026-02-05 16:06:18 - Channel 'tasklesson23.orderEventOutputChannel' has 1 subscriber(s).
+2026-02-05 16:06:18 - started bean 'orderEventSubscriber.serviceActivator'
+2026-02-05 16:06:18 - Adding {service-activator} as a subscriber to the 'orderInputChannel' channel
+2026-02-05 16:06:18 - Channel 'tasklesson23.orderInputChannel' has 1 subscriber(s).
+2026-02-05 16:06:18 - started bean 'orderProcessingFlow.org.springframework.integration.config.ConsumerEndpointFactoryBean#0'; defined in: 'class path resource [ru/diasoft/tasklesson23/config/OrderIntegrationConfig.class]'; from source: 'bean method orderProcessingFlow'
+2026-02-05 16:06:18 - Adding {router} as a subscriber to the 'orderProcessingFlow.channel#1' channel
+2026-02-05 16:06:18 - Channel 'tasklesson23.orderProcessingFlow.channel#1' has 1 subscriber(s).
+2026-02-05 16:06:18 - started bean 'orderProcessingFlow.org.springframework.integration.config.ConsumerEndpointFactoryBean#1'; defined in: 'class path resource [ru/diasoft/tasklesson23/config/OrderIntegrationConfig.class]'; from source: 'bean method orderProcessingFlow'
+2026-02-05 16:06:18 - Adding {bridge} as a subscriber to the 'orderProcessingFlow.subFlow#0.channel#0' channel
+2026-02-05 16:06:18 - Channel 'tasklesson23.orderProcessingFlow.subFlow#0.channel#0' has 1 subscriber(s).
+2026-02-05 16:06:18 - started bean 'orderProcessingFlow.subFlow#0.org.springframework.integration.config.ConsumerEndpointFactoryBean#0'; defined in: 'class path resource [ru/diasoft/tasklesson23/config/OrderIntegrationConfig.class]'; from source: 'bean method orderProcessingFlow'
+2026-02-05 16:06:18 - Adding {bridge} as a subscriber to the 'orderProcessingFlow.subFlow#1.channel#0' channel
+2026-02-05 16:06:18 - Channel 'tasklesson23.orderProcessingFlow.subFlow#1.channel#0' has 1 subscriber(s).
+2026-02-05 16:06:18 - started bean 'orderProcessingFlow.subFlow#1.org.springframework.integration.config.ConsumerEndpointFactoryBean#0'; defined in: 'class path resource [ru/diasoft/tasklesson23/config/OrderIntegrationConfig.class]'; from source: 'bean method orderProcessingFlow'
+2026-02-05 16:06:18 - Adding {bridge} as a subscriber to the 'validatedOrderProcessingFlow.subFlow#0.channel#0' channel
+2026-02-05 16:06:18 - Channel 'tasklesson23.validatedOrderProcessingFlow.subFlow#0.channel#0' has 1 subscriber(s).
+2026-02-05 16:06:18 - started bean 'validatedOrderProcessingFlow.subFlow#0.org.springframework.integration.config.ConsumerEndpointFactoryBean#0'; defined in: 'class path resource [ru/diasoft/tasklesson23/config/OrderIntegrationConfig.class]'; from source: 'bean method validatedOrderProcessingFlow'
+2026-02-05 16:06:18 - Adding {service-activator} as a subscriber to the 'validatedOrderProcessingFlow.subFlow#0.channel#2' channel
+2026-02-05 16:06:18 - Channel 'tasklesson23.validatedOrderProcessingFlow.subFlow#0.channel#2' has 1 subscriber(s).
+2026-02-05 16:06:18 - started bean 'validatedOrderProcessingFlow.subFlow#0.org.springframework.integration.config.ConsumerEndpointFactoryBean#1'; defined in: 'class path resource [ru/diasoft/tasklesson23/config/OrderIntegrationConfig.class]'; from source: 'bean method validatedOrderProcessingFlow'
+2026-02-05 16:06:18 - Adding {bridge} as a subscriber to the 'validatedOrderProcessingFlow.subFlow#0.channel#0' channel
+2026-02-05 16:06:18 - Channel 'tasklesson23.validatedOrderProcessingFlow.subFlow#0.channel#0' has 2 subscriber(s).
+2026-02-05 16:06:18 - started bean 'validatedOrderProcessingFlow.subFlow#1.org.springframework.integration.config.ConsumerEndpointFactoryBean#0'; defined in: 'class path resource [ru/diasoft/tasklesson23/config/OrderIntegrationConfig.class]'; from source: 'bean method validatedOrderProcessingFlow'
+2026-02-05 16:06:18 - Adding {service-activator} as a subscriber to the 'validatedOrderProcessingFlow.subFlow#1.channel#1' channel
+2026-02-05 16:06:18 - Channel 'tasklesson23.validatedOrderProcessingFlow.subFlow#1.channel#1' has 1 subscriber(s).
+2026-02-05 16:06:18 - started bean 'validatedOrderProcessingFlow.subFlow#1.org.springframework.integration.config.ConsumerEndpointFactoryBean#1'; defined in: 'class path resource [ru/diasoft/tasklesson23/config/OrderIntegrationConfig.class]'; from source: 'bean method validatedOrderProcessingFlow'
+2026-02-05 16:06:18 - Adding {bridge} as a subscriber to the 'validatedOrderChannel' channel
+2026-02-05 16:06:18 - Channel 'tasklesson23.validatedOrderChannel' has 1 subscriber(s).
+2026-02-05 16:06:18 - started bean 'validatedOrderProcessingFlow.org.springframework.integration.config.ConsumerEndpointFactoryBean#0'; defined in: 'class path resource [ru/diasoft/tasklesson23/config/OrderIntegrationConfig.class]'; from source: 'bean method validatedOrderProcessingFlow'
+2026-02-05 16:06:18 - Adding {aggregator} as a subscriber to the 'orderAggregatorChannel' channel
+2026-02-05 16:06:18 - Channel 'tasklesson23.orderAggregatorChannel' has 1 subscriber(s).
+2026-02-05 16:06:18 - started bean 'aggregationFlow.org.springframework.integration.config.ConsumerEndpointFactoryBean#0'; defined in: 'class path resource [ru/diasoft/tasklesson23/config/OrderIntegrationConfig.class]'; from source: 'bean method aggregationFlow'
+2026-02-05 16:06:18 - Adding {service-activator} as a subscriber to the 'aggregationFlow.channel#1' channel
+2026-02-05 16:06:18 - Channel 'tasklesson23.aggregationFlow.channel#1' has 1 subscriber(s).
+2026-02-05 16:06:18 - started bean 'aggregationFlow.org.springframework.integration.config.ConsumerEndpointFactoryBean#1'; defined in: 'class path resource [ru/diasoft/tasklesson23/config/OrderIntegrationConfig.class]'; from source: 'bean method aggregationFlow'
+2026-02-05 16:06:18 - Adding {bridge} as a subscriber to the 'aggregationFlow.channel#3' channel
+2026-02-05 16:06:18 - Channel 'tasklesson23.aggregationFlow.channel#3' has 1 subscriber(s).
+2026-02-05 16:06:18 - started bean 'aggregationFlow.org.springframework.integration.config.ConsumerEndpointFactoryBean#2'; defined in: 'class path resource [ru/diasoft/tasklesson23/config/OrderIntegrationConfig.class]'; from source: 'bean method aggregationFlow'
+2026-02-05 16:06:18 - Adding {bridge} as a subscriber to the 'paymentResultChannel' channel
+2026-02-05 16:06:18 - Channel 'tasklesson23.paymentResultChannel' has 1 subscriber(s).
+2026-02-05 16:06:18 - started bean 'paymentResultFlow.org.springframework.integration.config.ConsumerEndpointFactoryBean#0'; defined in: 'class path resource [ru/diasoft/tasklesson23/config/OrderIntegrationConfig.class]'; from source: 'bean method paymentResultFlow'
+2026-02-05 16:06:18 - Adding {bridge} as a subscriber to the 'inventoryResultChannel' channel
+2026-02-05 16:06:18 - Channel 'tasklesson23.inventoryResultChannel' has 1 subscriber(s).
+2026-02-05 16:06:18 - started bean 'inventoryResultFlow.org.springframework.integration.config.ConsumerEndpointFactoryBean#0'; defined in: 'class path resource [ru/diasoft/tasklesson23/config/OrderIntegrationConfig.class]'; from source: 'bean method inventoryResultFlow'
+2026-02-05 16:06:18 - Adding {service-activator} as a subscriber to the 'errorChannel' channel
+2026-02-05 16:06:18 - Channel 'tasklesson23.errorChannel' has 1 subscriber(s).
+2026-02-05 16:06:18 - started bean 'errorHandlingFlow.org.springframework.integration.config.ConsumerEndpointFactoryBean#0'; defined in: 'class path resource [ru/diasoft/tasklesson23/config/OrderIntegrationConfig.class]'; from source: 'bean method errorHandlingFlow'
+2026-02-05 16:06:18 - Tomcat started on port 8080 (http) with context path '/'
+2026-02-05 16:06:18 - Started Tasklesson23Application in 4.951 seconds (process running for 5.84)
+2026-02-05 16:06:19 - Initializing Spring DispatcherServlet 'dispatcherServlet'
+2026-02-05 16:06:19 - Initializing Servlet 'dispatcherServlet'
+2026-02-05 16:06:19 - Completed initialization in 3 ms
+2026-02-05 16:06:48 - Resolved [org.springframework.web.HttpRequestMethodNotSupportedException: Request method 'GET' is not supported]
+2026-02-05 16:07:15 - Submitting test order
+2026-02-05 16:07:15 - Creating OrderItem via REST: OrderItemRequest(productId=prod-123, productName=Test Product, quantity=2, price=50.0)
+2026-02-05 16:07:15 - 📥 Received order: 3b71c61f-c12e-4fbe-8d60-292039727306
+2026-02-05 16:07:15 - ✅ Order validated: 3b71c61f-c12e-4fbe-8d60-292039727306
+2026-02-05 16:07:15 - 🔀 Starting parallel processing for order: 3b71c61f-c12e-4fbe-8d60-292039727306
+2026-02-05 16:07:15 - 💳 Processing payment for order: 3b71c61f-c12e-4fbe-8d60-292039727306
+2026-02-05 16:07:15 - 📦 Reserving inventory for order: 3b71c61f-c12e-4fbe-8d60-292039727306
+2026-02-05 16:07:15 - 💳 Processing payment for order: 3b71c61f-c12e-4fbe-8d60-292039727306
+2026-02-05 16:07:15 - 📦 Reserving inventory for order: 3b71c61f-c12e-4fbe-8d60-292039727306
+2026-02-05 16:07:16 - ✅ Inventory reserved for order: 3b71c61f-c12e-4fbe-8d60-292039727306
+2026-02-05 16:07:16 - 📦 Inventory result for order: 3b71c61f-c12e-4fbe-8d60-292039727306 status: INVENTORY_RESERVED
+2026-02-05 16:07:16 - ✅ Payment successful for order: 3b71c61f-c12e-4fbe-8d60-292039727306
+2026-02-05 16:07:16 - 💳 Payment result for order: 3b71c61f-c12e-4fbe-8d60-292039727306 status: PAYMENT_PROCESSED
+2026-02-05 16:07:16 - 🚚 Scheduling shipping for aggregated results
+2026-02-05 16:07:16 - 🎉 Order processing completed
