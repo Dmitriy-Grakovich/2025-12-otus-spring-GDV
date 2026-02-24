@@ -1,0 +1,62 @@
+version: '3.8'
+
+services:
+  orderitem-service:
+    build:
+      context: ./orderitem-service
+      dockerfile: Dockerfile
+    image: orderitem-service:latest
+    container_name: orderitem-service
+    ports:
+      - "8081:8081"
+    environment:
+      - SPRING_PROFILES_ACTIVE=docker
+      - JAVA_OPTS=-Xmx512m -Xms256m
+    healthcheck:
+      test: ["CMD", "wget", "--no-verbose", "--tries=1", "--spider", "http://localhost:8081/actuator/health"]
+      interval: 30s
+      timeout: 3s
+      retries: 3
+      start_period: 40s
+    networks:
+      - app-network
+    restart: unless-stopped
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"
+
+  tasklesson23:
+    build:
+      context: ./tasklesson23
+      dockerfile: Dockerfile
+    image: tasklesson23:latest
+    container_name: tasklesson23
+    ports:
+      - "8080:8080"
+    environment:
+      - SPRING_PROFILES_ACTIVE=docker
+      - ORDERITEM_SERVICE_URL=http://orderitem-service:8081
+      - JAVA_OPTS=-Xmx512m -Xms256m
+    depends_on:
+      orderitem-service:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD", "wget", "--no-verbose", "--tries=1", "--spider", "http://localhost:8080/actuator/health"]
+      interval: 30s
+      timeout: 3s
+      retries: 3
+      start_period: 40s
+    networks:
+      - app-network
+    restart: unless-stopped
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"
+
+networks:
+  app-network:
+    driver: bridge
