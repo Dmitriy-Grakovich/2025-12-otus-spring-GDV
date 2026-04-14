@@ -6,10 +6,13 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.doNothing;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import ru.diasoft.orderitemservice.dto.OrderItemRequest;
-
+import ru.diasoft.orderitemservice.kafka.producer.OrderEventProducer;
+import org.springframework.boot.test.mock.mockito.MockBean;
 import static org.hamcrest.Matchers.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
@@ -28,10 +31,14 @@ class OrderItemControllerTest {
     private ObjectMapper objectMapper;
 
     private String createdItemId;
+    @MockBean
+    private OrderEventProducer producer;
+
 
     @BeforeEach
     void setUp() throws Exception {
         // Создаем тестовый элемент для использования в тестах
+        doNothing().when(producer).sendOrderItemEvent(any());
         OrderItemRequest request = new OrderItemRequest("prod-test", "Test Product", 1, 10.0);
         
         String response = mockMvc.perform(post("/api/order-items")

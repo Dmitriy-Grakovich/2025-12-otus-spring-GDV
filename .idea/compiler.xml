@@ -10,9 +10,8 @@
         <module name="task01" />
         <module name="spring" />
         <module name="spring (1)" />
-        <module name="orderitem-service" />
       </profile>
-      <profile name="Annotation profile for tasklesson23" enabled="true">
+      <profile name="Annotation profile for orderitem-service" enabled="true">
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
@@ -21,6 +20,7 @@
           <entry name="$MAVEN_REPOSITORY$/org/mapstruct/mapstruct/1.5.5.Final/mapstruct-1.5.5.Final.jar" />
           <entry name="$MAVEN_REPOSITORY$/org/projectlombok/lombok/1.18.40/lombok-1.18.40.jar" />
         </processorPath>
+        <module name="orderitem-service" />
         <module name="tasklesson23" />
         <module name="tasklesson16" />
       </profile>
