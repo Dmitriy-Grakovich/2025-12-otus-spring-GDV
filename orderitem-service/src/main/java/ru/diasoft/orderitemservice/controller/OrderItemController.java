@@ -8,6 +8,9 @@ import org.springframework.web.bind.annotation.*;
 import ru.diasoft.orderitemservice.domain.OrderItem;
 import ru.diasoft.orderitemservice.dto.OrderItemRequest;
 import ru.diasoft.orderitemservice.dto.OrderItemResponse;
+import ru.diasoft.orderitemservice.kafka.event.OrderItemEvent;
+import ru.diasoft.orderitemservice.kafka.event.OrderItemEventType;
+import ru.diasoft.orderitemservice.kafka.producer.OrderEventProducer;
 import ru.diasoft.orderitemservice.service.OrderItemService;
 
 import java.util.List;
@@ -20,11 +23,13 @@ import java.util.stream.Collectors;
 public class OrderItemController {
     
     private final OrderItemService orderItemService;
+    private final OrderEventProducer producer;
     
     @PostMapping
     public ResponseEntity<OrderItemResponse> createOrderItem(@RequestBody OrderItemRequest request) {
         log.info("Creating OrderItem for product: {}", request.getProductId());
         OrderItem orderItem = orderItemService.createOrderItem(request);
+        producer.sendOrderItemEvent(new OrderItemEvent(orderItem, OrderItemEventType.CREATED));
         return ResponseEntity.status(HttpStatus.CREATED).body(toResponse(orderItem));
     }
     
@@ -51,7 +56,11 @@ public class OrderItemController {
             @RequestBody OrderItemRequest request) {
         log.info("Updating OrderItem with id: {}", id);
         try {
+
             OrderItem orderItem = orderItemService.updateOrderItem(id, request);
+
+            producer.sendOrderItemEvent(new OrderItemEvent(orderItem, OrderItemEventType.UPDATED));
+
             return ResponseEntity.ok(toResponse(orderItem));
         } catch (RuntimeException e) {
             return ResponseEntity.notFound().build();
@@ -60,9 +69,23 @@ public class OrderItemController {
     
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteOrderItem(@PathVariable String id) {
-        log.info("Deleting OrderItem with id: {}", id);
-        orderItemService.deleteOrderItem(id);
-        return ResponseEntity.noContent().build();
+        try {
+            OrderItem orderItem = orderItemService.getOrderItem(id).orElse(null);
+            orderItemService.deleteOrderItem(id);
+
+            // Отправка события удаления (если нужно, можно передать ID удаленного элемента)
+            if (orderItem != null) {
+                producer.sendOrderItemEvent(new OrderItemEvent(orderItem, OrderItemEventType.DELETED));
+            } else {
+                // Или создать событие только с ID
+                producer.sendOrderItemDeletionEvent(id);
+            }
+
+            return ResponseEntity.noContent().build();
+        } catch (RuntimeException e) {
+            log.error("OrderItem not found with id: {}", id);
+            return ResponseEntity.notFound().build();
+        }
     }
     
     @GetMapping("/{id}/total-price")
