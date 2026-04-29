@@ -1,0 +1,51 @@
+databaseChangeLog:
+  - changeSet:
+      id: 2025-12-21--0001-create-consumer-table
+      author: dgrakovich
+      changes:
+        - createTable:
+            tableName: consumer
+            columns:
+              - column:
+                  name: id
+                  type: bigint
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: username
+                  type: varchar(255)
+                  constraints:
+                    nullable: false
+                    unique: true
+              - column:
+                  name: password
+                  type: varchar(255)
+                  constraints:
+                    nullable: false
+
+  - changeSet:
+      id: 2025-12-21--0002-create-user-role-table
+      author: dgrakovich
+      changes:
+        - createTable:
+            tableName: user_role
+            columns:
+              - column:
+                  name: user_id
+                  type: bigint
+                  constraints:
+                    nullable: false
+              - column:
+                  name: roles
+                  type: varchar(50)
+                  constraints:
+                    nullable: false
+        - addForeignKeyConstraint:
+            baseTableName: user_role
+            baseColumnNames: user_id
+            constraintName: fk_user_role_consumer
+            referencedTableName: consumer
+            referencedColumnNames: id
+            onDelete: CASCADE

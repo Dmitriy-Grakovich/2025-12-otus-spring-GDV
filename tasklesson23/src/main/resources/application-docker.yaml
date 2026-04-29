@@ -1,0 +1,46 @@
+spring:
+  application:
+    name: tasklesson23
+
+server:
+  port: 8080
+
+# OrderItem Service Configuration for Docker
+orderitem:
+  service:
+    url: ${ORDERITEM_SERVICE_URL:http://orderitem-service:8081}
+
+logging:
+  level:
+    org.springframework.integration: INFO
+    ru.diasoft.tasklesson23: INFO
+  pattern:
+    console: "%d{HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n"
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info,metrics,prometheus,integrationgraph
+      base-path: /actuator
+  endpoint:
+    health:
+      show-details: always
+      show-components: always
+    prometheus:
+      enabled: true
+  metrics:
+    export:
+      prometheus:
+        enabled: true
+    tags:
+      application: ${spring.application.name}
+  info:
+    env:
+      enabled: true
+
+info:
+  app:
+    name: ${spring.application.name}
+    description: Spring Integration Order Processing Application
+    version: 0.0.1-SNAPSHOT

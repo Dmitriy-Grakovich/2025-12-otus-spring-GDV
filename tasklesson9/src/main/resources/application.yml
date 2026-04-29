@@ -1,0 +1,39 @@
+
+spring:
+  application:
+    name: tasklesson9
+
+  datasource:
+    url: jdbc:h2:mem:testdb
+  h2:
+    console:
+      enabled: true
+      path: /h2-console
+  jpa:
+    generate-ddl: false
+    hibernate:
+      ddl-auto: none
+
+    show-sql: true
+
+  liquibase:
+    enabled: true
+    contexts: production
+  main:
+    web-application-type: none
+  shell:
+    interactive:
+      enabled: true
+    command:
+      script:
+        enabled: false
+    noninteractive:
+      enabled: false
+
+
+
+
+  logging:
+    level:
+      liquibase: INFO
+      ru.diasoft.spring: DEBUG

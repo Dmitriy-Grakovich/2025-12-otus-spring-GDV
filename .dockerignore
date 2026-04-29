@@ -1,0 +1,14 @@
+# Ignore all subdirectories by default
+*
+
+# Allow only necessary directories
+!tasklesson23/
+!orderitem-service/
+
+# Ignore git and IDE files
+.git/
+.idea/
+*.iml
+
+# Ignore documentation
+*.md

@@ -1,0 +1,57 @@
+spring:
+  application:
+    name: tasklesson23
+
+server:
+  port: 8080
+
+# OrderItem Service Configuration
+orderitem:
+  service:
+    url: http://localhost:8081
+
+# Logging configuration
+logging:
+  level:
+    org.springframework.integration: INFO
+    ru.diasoft.tasklesson23: DEBUG
+  file:
+    name: logs/tasklesson23.log
+  pattern:
+    file: "%d{yyyy-MM-dd HH:mm:ss} - %msg%n"
+    console: "%d{HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n"
+
+# Spring Boot Actuator configuration
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info,metrics,prometheus,logfile,env,beans,integrationgraph
+      base-path: /actuator
+  endpoint:
+    health:
+      show-details: always
+      show-components: always
+    logfile:
+      enabled: true
+    prometheus:
+      enabled: true
+  metrics:
+    export:
+      prometheus:
+        enabled: true
+    tags:
+      application: ${spring.application.name}
+  info:
+    env:
+      enabled: true
+
+# Application info
+info:
+  app:
+    name: ${spring.application.name}
+    description: Spring Integration Order Processing Application
+    version: 0.0.1-SNAPSHOT
+    encoding: @project.build.sourceEncoding@
+    java:
+      version: @java.version@

@@ -1,0 +1,65 @@
+databaseChangeLog:
+  - changeSet:
+      id: 2025-12-21--0001-insert-test-users
+      author: dgrakovich
+      context: test, production
+      changes:
+        - insert:
+            tableName: consumer
+            columns:
+              - column:
+                  name: id
+                  value: 1
+              - column:
+                  name: username
+                  value: user
+              - column:
+                  name: password
+                  # Plain text password with {noop} prefix
+                  value: "{noop}user"
+        - insert:
+            tableName: consumer
+            columns:
+              - column:
+                  name: id
+                  value: 2
+              - column:
+                  name: username
+                  value: admin
+              - column:
+                  name: password
+                  # Plain text password with {noop} prefix
+                  value: "{noop}admin"
+
+  - changeSet:
+      id: 2025-12-21--0002-insert-user-roles
+      author: dgrakovich
+      context: test, production
+      changes:
+        - insert:
+            tableName: user_role
+            columns:
+              - column:
+                  name: user_id
+                  value: 1
+              - column:
+                  name: roles
+                  value: USER
+        - insert:
+            tableName: user_role
+            columns:
+              - column:
+                  name: user_id
+                  value: 2
+              - column:
+                  name: roles
+                  value: ADMIN
+        - insert:
+            tableName: user_role
+            columns:
+              - column:
+                  name: user_id
+                  value: 2
+              - column:
+                  name: roles
+                  value: USER
