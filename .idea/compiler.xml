@@ -9,6 +9,7 @@
         <outputRelativeToContentRoot value="true" />
         <module name="task01" />
         <module name="spring" />
+        <module name="spring (2)" />
         <module name="spring (1)" />
       </profile>
       <profile name="Annotation profile for orderitem-service" enabled="true">
@@ -18,7 +19,7 @@
         <processorPath useClasspath="false">
           <entry name="$MAVEN_REPOSITORY$/org/mapstruct/mapstruct-processor/1.5.5.Final/mapstruct-processor-1.5.5.Final.jar" />
           <entry name="$MAVEN_REPOSITORY$/org/mapstruct/mapstruct/1.5.5.Final/mapstruct-1.5.5.Final.jar" />
-          <entry name="$MAVEN_REPOSITORY$/org/projectlombok/lombok/1.18.40/lombok-1.18.40.jar" />
+          <entry name="$MAVEN_REPOSITORY$/org/projectlombok/lombok/1.18.30/lombok-1.18.30.jar" />
         </processorPath>
         <module name="orderitem-service" />
         <module name="tasklesson23" />
@@ -31,6 +32,7 @@
       <module name="orderitem-service" options="-parameters" />
       <module name="spring" options="-parameters" />
       <module name="spring (1)" options="-parameters" />
+      <module name="spring (2)" options="-parameters" />
       <module name="tasklesson16" options="-parameters" />
       <module name="tasklesson23" options="-parameters" />
     </option>
