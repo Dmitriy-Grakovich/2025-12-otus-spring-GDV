@@ -1,0 +1,116 @@
+# db/changelog/db.changelog-master.yaml
+databaseChangeLog:
+  - changeSet:
+      id: 1
+      author: dev
+      changes:
+        # Таблица пользователей
+        - createTable:
+            tableName: users
+            columns:
+              - column: { name: id, type: bigint, autoIncrement: true, constraints: { primaryKey: true } }
+              - column: { name: email, type: varchar(100), constraints: { unique: true, nullable: false } }
+              - column: { name: password, type: varchar(255), constraints: { nullable: false } }
+              - column: { name: full_name, type: varchar(100) }
+              - column: { name: is_active, type: boolean, defaultValueBoolean: true }
+              - column: { name: created_at, type: timestamp, defaultValueComputed: CURRENT_TIMESTAMP }
+
+        # Таблица ролей (справочник)
+        - createTable:
+            tableName: roles
+            columns:
+              - column: { name: id, type: bigint, autoIncrement: true, constraints: { primaryKey: true } }
+              - column: { name: name, type: varchar(50), constraints: { unique: true, nullable: false } }
+              - column: { name: description, type: varchar(255) }
+
+        # Таблица связи пользователей и ролей (многие ко многим)
+        - createTable:
+            tableName: user_roles
+            columns:
+              - column: { name: user_id, type: bigint, constraints: { nullable: false } }
+              - column: { name: role_id, type: bigint, constraints: { nullable: false } }
+
+        # Внешние ключи
+        - addForeignKeyConstraint:
+            constraintName: fk_user_roles_user
+            baseTableName: user_roles
+            baseColumnNames: user_id
+            referencedTableName: users
+            referencedColumnNames: id
+
+        - addForeignKeyConstraint:
+            constraintName: fk_user_roles_role
+            baseTableName: user_roles
+            baseColumnNames: role_id
+            referencedTableName: roles
+            referencedColumnNames: id
+
+        # Уникальность пары (user_id, role_id)
+        - addUniqueConstraint:
+            constraintName: uk_user_role
+            tableName: user_roles
+            columnNames: user_id, role_id
+
+  - changeSet:
+      id: 2
+      author: dev
+      changes:
+        # Предзаполнение ролей
+        - insert:
+            tableName: roles
+            columns:
+              - column: { name: name, value: "ROLE_READER" }
+              - column: { name: description, value: "Читатель, может читать и оставлять отзывы" }
+        - insert:
+            tableName: roles
+            columns:
+              - column: { name: name, value: "ROLE_AUTHOR" }
+              - column: { name: description, value: "Автор, может публиковать книги" }
+        - insert:
+            tableName: roles
+            columns:
+              - column: { name: name, value: "ROLE_MODERATOR" }
+              - column: { name: description, value: "Модератор, проверяет книги" }
+        - insert:
+            tableName: roles
+            columns:
+              - column: { name: name, value: "ROLE_ADMIN" }
+              - column: { name: description, value: "Администратор, полный доступ" }
+
+  - changeSet:
+      id: 3
+      author: dev
+      changes:
+        # Остальные таблицы (книги, жанры, отзывы и т.д.)
+        - createTable:
+            tableName: genres
+            columns:
+              - column: { name: id, type: bigint, autoIncrement: true, constraints: { primaryKey: true } }
+              - column: { name: name, type: varchar(50), constraints: { unique: true, nullable: false } }
+              - column: { name: description, type: varchar(255) }
+
+        - createTable:
+            tableName: books
+            columns:
+              - column: { name: id, type: bigint, autoIncrement: true, constraints: { primaryKey: true } }
+              - column: { name: title, type: varchar(200), constraints: { nullable: false } }
+              - column: { name: description, type: text }
+              - column: { name: cover_url, type: varchar(500) }
+              - column: { name: price, type: decimal(10,2), defaultValueNumeric: 0 }
+              - column: { name: status, type: varchar(20), defaultValue: "DRAFT" }
+              - column: { name: author_id, type: bigint, constraints: { foreignKeyName: fk_book_author, references: users(id) } }
+              - column: { name: genre_id, type: bigint, constraints: { foreignKeyName: fk_book_genre, references: genres(id) } }
+              - column: { name: created_at, type: timestamp, defaultValueComputed: CURRENT_TIMESTAMP }
+              - column: { name: published_at, type: timestamp }
+              - column: { name: views_count, type: bigint, defaultValueNumeric: 0 }
+              - column: { name: downloads_count, type: bigint, defaultValueNumeric: 0 }
+
+        - createTable:
+            tableName: reviews
+            columns:
+              - column: { name: id, type: bigint, autoIncrement: true, constraints: { primaryKey: true } }
+              - column: { name: book_id, type: bigint, constraints: { foreignKeyName: fk_review_book, references: books(id) } }
+              - column: { name: user_id, type: bigint, constraints: { foreignKeyName: fk_review_user, references: users(id) } }
+              - column: { name: rating, type: int, constraints: { nullable: false } }
+              - column: { name: comment, type: text }
+              - column: { name: created_at, type: timestamp, defaultValueComputed: CURRENT_TIMESTAMP }
