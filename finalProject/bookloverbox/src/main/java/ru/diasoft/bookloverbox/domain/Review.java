@@ -1,6 +1,6 @@
 package ru.diasoft.bookloverbox.domain;
 
-import jakarta.persistence.*;
+import javax.persistence.*;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.AllArgsConstructor;

@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BookLoverBox - Литературный портал</title>
+    <link rel="stylesheet" href="/css/styles.css">
+</head>
+<body>
+    <div id="app">
+        <nav class="navbar">
+            <div class="container">
+                <div class="navbar-brand">
+                    <h1>📚 BookLoverBox</h1>
+                </div>
+                <div class="navbar-menu" id="navbarMenu">
+                    <a href="#" onclick="event.preventDefault(); showPage('home')" class="nav-link">Главная</a>
+                    <a href="#" onclick="event.preventDefault(); showPage('books')" class="nav-link">Книги</a>
+                    <a href="#" onclick="event.preventDefault(); showPage('mybooks')" class="nav-link auth-only" style="display:none;">Мои книги</a>
+                    <a href="#" onclick="event.preventDefault(); showPage('moderation')" class="nav-link moderator-only" style="display:none;">Модерация</a>
+                    <a href="#" onclick="event.preventDefault(); showPage('admin')" class="nav-link admin-only" style="display:none;">Админ</a>
+                    <a href="/swagger-ui.html" target="_blank" class="nav-link" title="API Documentation">📖 API</a>
+                </div>
+                <div class="navbar-auth" id="navbarAuth">
+                    <button onclick="event.preventDefault(); showPage('login')" class="btn btn-outline guest-only">Вход</button>
+                    <button onclick="event.preventDefault(); showPage('register')" class="btn btn-primary guest-only">Регистрация</button>
+                    <span class="user-info auth-only" style="display:none;">
+                        <span id="userName"></span>
+                        <button onclick="event.preventDefault(); logout()" class="btn btn-outline">Выход</button>
+                    </span>
+                </div>
+            </div>
+        </nav>
+
+        <main class="container">
+            <div id="pageContent"></div>
+        </main>
+
+        <footer class="footer">
+            <div class="container">
+                <p>&copy; 2026 BookLoverBox. Финальный проект OTUS</p>
+                <p style="margin-top: 0.5rem; font-size: 0.875rem;">
+                    <a href="/swagger-ui.html" target="_blank" style="color: var(--primary-color); margin-right: 1rem;">Swagger UI</a>
+                    <a href="/v3/api-docs" target="_blank" style="color: var(--primary-color);">OpenAPI Spec</a>
+                </p>
+            </div>
+        </footer>
+    </div>
+
+    <script src="/js/api.js"></script>
+    <script src="/js/auth.js"></script>
+    <script src="/js/pages.js"></script>
+    <script src="/js/app.js"></script>
+</body>
+</html>

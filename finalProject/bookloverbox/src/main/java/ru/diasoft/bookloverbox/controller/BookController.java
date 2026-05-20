@@ -3,7 +3,7 @@ package ru.diasoft.bookloverbox.controller;
 
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
-import jakarta.validation.Valid;
+import javax.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
@@ -12,6 +12,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 import ru.diasoft.bookloverbox.domain.Book;
 import ru.diasoft.bookloverbox.dto.BookDto;
+import ru.diasoft.bookloverbox.dto.CreateBookRequest;
 import ru.diasoft.bookloverbox.services.BookService;
 
 @RestController
@@ -23,17 +24,19 @@ public class BookController {
     private final BookService bookService;
     
     @PostMapping
-    @Operation(summary = "Создать новую книгу")
-    public ResponseEntity<Book> createBook(@Valid @RequestBody BookDto dto,
-                                           @AuthenticationPrincipal UserDetails user) {
-        return ResponseEntity.ok(bookService.createBook(dto, user.getUsername()));
+    @Operation(summary = "Создать новую книгу с полным описанием")
+    public ResponseEntity<BookDto> createBook(@Valid @RequestBody CreateBookRequest request,
+                                              @AuthenticationPrincipal UserDetails user) {
+        Book book = bookService.createBookFromRequest(request, user.getUsername());
+        return ResponseEntity.ok(bookService.convertToDto(book));
     }
     
     @PostMapping("/{id}/moderation")
     @Operation(summary = "Отправить книгу на модерацию")
-    public ResponseEntity<Book> submitToModeration(@PathVariable Long id,
-                                                   @AuthenticationPrincipal UserDetails user) {
-        return ResponseEntity.ok(bookService.submitToModeration(id, user.getUsername()));
+    public ResponseEntity<BookDto> submitToModeration(@PathVariable Long id,
+                                                      @AuthenticationPrincipal UserDetails user) {
+        Book book = bookService.submitToModeration(id, user.getUsername());
+        return ResponseEntity.ok(bookService.convertToDto(book));
     }
     
     @GetMapping
@@ -66,5 +69,22 @@ public class BookController {
             @RequestParam(defaultValue = "0") int page,
             @RequestParam(defaultValue = "10") int size) {
         return ResponseEntity.ok(bookService.searchBooks(title, page, size));
+    }
+    
+    @PutMapping("/{id}")
+    @Operation(summary = "Обновить книгу")
+    public ResponseEntity<BookDto> updateBook(@PathVariable Long id,
+                                              @Valid @RequestBody CreateBookRequest request,
+                                              @AuthenticationPrincipal UserDetails user) {
+        Book book = bookService.updateBook(id, request, user.getUsername());
+        return ResponseEntity.ok(bookService.convertToDto(book));
+    }
+    
+    @DeleteMapping("/{id}")
+    @Operation(summary = "Удалить книгу")
+    public ResponseEntity<Void> deleteBook(@PathVariable Long id,
+                                          @AuthenticationPrincipal UserDetails user) {
+        bookService.deleteBook(id, user.getUsername());
+        return ResponseEntity.ok().build();
     }
 }

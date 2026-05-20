@@ -2,11 +2,14 @@ package ru.diasoft.bookloverbox.services;
 
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
+import ru.diasoft.bookloverbox.config.CacheConfig;
 import ru.diasoft.bookloverbox.domain.BookStatus;
 import ru.diasoft.bookloverbox.domain.User;
 import ru.diasoft.bookloverbox.dto.UserStatsDto;
 import ru.diasoft.bookloverbox.repository.BookRepository;
+import ru.diasoft.bookloverbox.repository.ReviewRepository;
 import ru.diasoft.bookloverbox.repository.UserRepository;
 
 import java.util.HashMap;
@@ -20,6 +23,7 @@ public class AdminService {
     
     private final UserRepository userRepository;
     private final BookRepository bookRepository;
+    private final ReviewRepository reviewRepository;
     
     public List<User> getAllUsers() {
         return userRepository.findAll();
@@ -67,5 +71,36 @@ public class AdminService {
             ))
             .limit(limit)
             .collect(Collectors.toList());
+    }
+    
+    @Cacheable(value = CacheConfig.USER_STATS_CACHE)
+    public List<UserStatsDto> getUsersStatistics() {
+        return userRepository.findAll().stream()
+            .map(user -> {
+                UserStatsDto dto = new UserStatsDto();
+                dto.setUserId(user.getId());
+                dto.setUserEmail(user.getEmail());
+                dto.setUserName(user.getFullName());
+                dto.setTotalBooks(bookRepository.countByAuthor(user));
+                dto.setPublishedBooks((long) bookRepository.findByAuthorAndStatus(user, BookStatus.PUBLISHED).size());
+                dto.setTotalReviews(reviewRepository.countByUser(user));
+                return dto;
+            })
+            .collect(Collectors.toList());
+    }
+    
+    @Cacheable(value = CacheConfig.USER_STATS_CACHE, key = "'overview'")
+    public Map<String, Object> getOverviewStatistics() {
+        Map<String, Object> stats = new HashMap<>();
+        
+        stats.put("totalUsers", userRepository.count());
+        stats.put("activeUsers", userRepository.findAll().stream().filter(User::isActive).count());
+        stats.put("totalBooks", bookRepository.count());
+        stats.put("publishedBooks", bookRepository.findByStatus(BookStatus.PUBLISHED).size());
+        stats.put("booksOnModeration", bookRepository.findByStatus(BookStatus.MODERATION).size());
+        stats.put("totalReviews", reviewRepository.count());
+        stats.put("booksByStatus", getBooksCountByStatus());
+        
+        return stats;
     }
 }

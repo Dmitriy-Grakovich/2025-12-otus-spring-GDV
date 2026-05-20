@@ -1,0 +1,30 @@
+databaseChangeLog:
+  - changeSet:
+      id: 2
+      author: dev
+      changes:
+        # Предзаполнение ролей
+        - insert:
+            tableName: roles
+            columns:
+              - column: { name: id, value: "1" }
+              - column: { name: name, value: "ROLE_READER" }
+              - column: { name: description, value: "Читатель, может читать и оставлять отзывы" }
+        - insert:
+            tableName: roles
+            columns:
+              - column: { name: id, value: "2" }
+              - column: { name: name, value: "ROLE_AUTHOR" }
+              - column: { name: description, value: "Автор, может публиковать книги" }
+        - insert:
+            tableName: roles
+            columns:
+              - column: { name: id, value: "3" }
+              - column: { name: name, value: "ROLE_MODERATOR" }
+              - column: { name: description, value: "Модератор, проверяет книги" }
+        - insert:
+            tableName: roles
+            columns:
+              - column: { name: id, value: "4" }
+              - column: { name: name, value: "ROLE_ADMIN" }
+              - column: { name: description, value: "Администратор, полный доступ" }

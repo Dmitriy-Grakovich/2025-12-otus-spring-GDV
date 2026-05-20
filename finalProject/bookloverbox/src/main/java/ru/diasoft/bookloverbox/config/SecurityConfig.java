@@ -31,23 +31,30 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
-                .csrf(csrf -> csrf.disable())
-                .authorizeHttpRequests(auth -> auth
-                        // Публичные эндпоинты
-                        .requestMatchers(
+                .csrf().disable()
+                .cors().and()
+                .authorizeRequests()
+                        .antMatchers(
                                 "/api/auth/**",
                                 "/swagger-ui/**",
                                 "/swagger-ui.html",
                                 "/v3/api-docs/**",
-                                "/api/books/public/**",
-                                "/api/genres"
+                                "/api-docs/**",
+                                "/api/books",
+                                "/api/books/**",
+                                "/api/genres",
+                                "/api/reviews/**",
+                                "/actuator/**",
+                                "/",
+                                "/index.html",
+                                "/css/**",
+                                "/js/**"
                         ).permitAll()
-                        // Все остальные требуют аутентификации
                         .anyRequest().authenticated()
-                )
-                .sessionManagement(session -> session
+                .and()
+                .sessionManagement()
                         .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-                )
+                .and()
                 .authenticationProvider(authenticationProvider())
                 .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class);
 

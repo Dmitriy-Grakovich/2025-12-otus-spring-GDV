@@ -1,11 +1,12 @@
 package ru.diasoft.bookloverbox.domain;
 
-import jakarta.persistence.*;
+import javax.persistence.*;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.AllArgsConstructor;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -17,7 +18,7 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 public class Book {
-    
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -28,6 +29,9 @@ public class Book {
     @Column(columnDefinition = "TEXT")
     private String description;
     
+//    @Column(name = "author_name", length = 200)
+//    private String authorName;
+    
     @Column(name = "cover_url", length = 500)
     private String coverUrl;
     
@@ -37,7 +41,35 @@ public class Book {
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
     private BookStatus status = BookStatus.DRAFT;
+
+    @Column(name = "content", columnDefinition = "TEXT")
+    private String content;
     
+//    @Column(name = "language", length = 50)
+//    private String language = "Русский";
+    
+//    @Column(name = "tags", length = 500)
+//    private String tags;
+    
+    @Column(name = "publication_year")
+    private Integer publicationYear;
+    
+    @Column(name = "publisher", length = 200)
+    private String publisher;
+    
+    @Column(name = "page_count")
+    private Integer pageCount;
+    
+    @Column(name = "age_rating", length = 10)
+    private String ageRating = "0+";
+    
+    @Column(name = "copyright_holder", length = 200)
+    private String copyrightHolder;
+    
+    @Column(name = "isbn", length = 20)
+    private String isbn;
+    
+    @JsonIgnore
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "author_id", nullable = false)
     private User author;
@@ -46,6 +78,7 @@ public class Book {
     @JoinColumn(name = "genre_id")
     private Genre genre;
     
+    @JsonIgnore
     @OneToMany(mappedBy = "book", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<Review> reviews = new ArrayList<>();
     

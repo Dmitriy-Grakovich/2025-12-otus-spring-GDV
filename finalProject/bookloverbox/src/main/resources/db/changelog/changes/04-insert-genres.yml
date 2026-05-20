@@ -1,0 +1,34 @@
+databaseChangeLog:
+  - changeSet:
+      id: 4
+      author: dev
+      changes:
+        # Художественная литература
+        - insert: { tableName: genres, columns: [ { column: { name: name, value: "Классическая литература" } }, { column: { name: description, value: "Произведения классиков мировой литературы" } } ] }
+        - insert: { tableName: genres, columns: [ { column: { name: name, value: "Современная проза" } }, { column: { name: description, value: "Современная художественная литература" } } ] }
+        - insert: { tableName: genres, columns: [ { column: { name: name, value: "Фантастика" } }, { column: { name: description, value: "Научная фантастика и космические приключения" } } ] }
+        - insert: { tableName: genres, columns: [ { column: { name: name, value: "Фэнтези" } }, { column: { name: description, value: "Магия, драконы и волшебные миры" } } ] }
+        - insert: { tableName: genres, columns: [ { column: { name: name, value: "Детектив" } }, { column: { name: description, value: "Детективы и криминальные романы" } } ] }
+        - insert: { tableName: genres, columns: [ { column: { name: name, value: "Триллер" } }, { column: { name: description, value: "Напряженные и захватывающие истории" } } ] }
+        - insert: { tableName: genres, columns: [ { column: { name: name, value: "Роман" } }, { column: { name: description, value: "Любовные и семейные романы" } } ] }
+        - insert: { tableName: genres, columns: [ { column: { name: name, value: "Приключения" } }, { column: { name: description, value: "Приключенческие романы" } } ] }
+        - insert: { tableName: genres, columns: [ { column: { name: name, value: "Ужасы" } }, { column: { name: description, value: "Мистика и ужасы" } } ] }
+        - insert: { tableName: genres, columns: [ { column: { name: name, value: "Историческая проза" } }, { column: { name: description, value: "Исторические романы" } } ] }
+        - insert: { tableName: genres, columns: [ { column: { name: name, value: "Поэзия" } }, { column: { name: description, value: "Стихи и поэмы" } } ] }
+        - insert: { tableName: genres, columns: [ { column: { name: name, value: "Драматургия" } }, { column: { name: description, value: "Пьесы и сценарии" } } ] }
+        - insert: { tableName: genres, columns: [ { column: { name: name, value: "Детская литература" } }, { column: { name: description, value: "Книги для детей" } } ] }
+        - insert: { tableName: genres, columns: [ { column: { name: name, value: "Подростковая литература" } }, { column: { name: description, value: "Книги для подростков" } } ] }
+        - insert: { tableName: genres, columns: [ { column: { name: name, value: "Сказки" } }, { column: { name: description, value: "Народные и авторские сказки" } } ] }
+        - insert: { tableName: genres, columns: [ { column: { name: name, value: "Научная литература" } }, { column: { name: description, value: "Научные и научно-популярные книги" } } ] }
+        - insert: { tableName: genres, columns: [ { column: { name: name, value: "Бизнес" } }, { column: { name: description, value: "Книги о бизнесе и предпринимательстве" } } ] }
+        - insert: { tableName: genres, columns: [ { column: { name: name, value: "Психология" } }, { column: { name: description, value: "Книги по психологии" } } ] }
+        - insert: { tableName: genres, columns: [ { column: { name: name, value: "Саморазвитие" } }, { column: { name: description, value: "Книги по личностному росту" } } ] }
+        - insert: { tableName: genres, columns: [ { column: { name: name, value: "История" } }, { column: { name: description, value: "Исторические исследования" } } ] }
+        - insert: { tableName: genres, columns: [ { column: { name: name, value: "Биография" } }, { column: { name: description, value: "Биографии и мемуары" } } ] }
+        - insert: { tableName: genres, columns: [ { column: { name: name, value: "Философия" } }, { column: { name: description, value: "Философские труды" } } ] }
+        - insert: { tableName: genres, columns: [ { column: { name: name, value: "Религия" } }, { column: { name: description, value: "Религиозная литература" } } ] }
+        - insert: { tableName: genres, columns: [ { column: { name: name, value: "Кулинария" } }, { column: { name: description, value: "Кулинарные книги и рецепты" } } ] }
+        - insert: { tableName: genres, columns: [ { column: { name: name, value: "Путешествия" } }, { column: { name: description, value: "Путеводители и книги о путешествиях" } } ] }
+        - insert: { tableName: genres, columns: [ { column: { name: name, value: "Программирование" } }, { column: { name: description, value: "Книги по программированию и IT" } } ] }
+        - insert: { tableName: genres, columns: [ { column: { name: name, value: "Учебная литература" } }, { column: { name: description, value: "Учебники и учебные пособия" } } ] }
+        - insert: { tableName: genres, columns: [ { column: { name: name, value: "Справочники" } }, { column: { name: description, value: "Справочная литература" } } ] }

@@ -3,7 +3,7 @@ package ru.diasoft.bookloverbox.controller;
 
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
-import jakarta.validation.Valid;
+import javax.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
@@ -24,18 +24,20 @@ public class ReviewController {
     
     @PostMapping("/books/{bookId}")
     @Operation(summary = "Оставить отзыв")
-    public ResponseEntity<Review> createReview(@PathVariable Long bookId,
-                                               @Valid @RequestBody ReviewDto dto,
-                                               @AuthenticationPrincipal UserDetails user) {
-        return ResponseEntity.ok(reviewService.createReview(bookId, dto, user.getUsername()));
+    public ResponseEntity<ReviewDto> createReview(@PathVariable Long bookId,
+                                                  @Valid @RequestBody ReviewDto dto,
+                                                  @AuthenticationPrincipal UserDetails user) {
+        Review review = reviewService.createReview(bookId, dto, user.getUsername());
+        return ResponseEntity.ok(reviewService.convertToDto(review));
     }
     
     @PutMapping("/{reviewId}")
     @Operation(summary = "Редактировать отзыв")
-    public ResponseEntity<Review> updateReview(@PathVariable Long reviewId,
-                                               @Valid @RequestBody ReviewDto dto,
-                                               @AuthenticationPrincipal UserDetails user) {
-        return ResponseEntity.ok(reviewService.updateReview(reviewId, dto, user.getUsername()));
+    public ResponseEntity<ReviewDto> updateReview(@PathVariable Long reviewId,
+                                                  @Valid @RequestBody ReviewDto dto,
+                                                  @AuthenticationPrincipal UserDetails user) {
+        Review review = reviewService.updateReview(reviewId, dto, user.getUsername());
+        return ResponseEntity.ok(reviewService.convertToDto(review));
     }
     
     @DeleteMapping("/{reviewId}")

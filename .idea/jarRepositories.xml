@@ -17,6 +17,11 @@
       <option name="url" value="http://repolib-platform.diasoft.ru:8080/repository/snapshots/" />
     </remote-repository>
     <remote-repository>
+      <option name="id" value="central" />
+      <option name="name" value="Maven Central" />
+      <option name="url" value="http://repolib-main.diasoft.ru:8081/repository/public/" />
+    </remote-repository>
+    <remote-repository>
       <option name="id" value="id005-nexus-proxy" />
       <option name="name" value="id005-nexus-proxy" />
       <option name="url" value="http://nexus-proxy.diasoft.ru:8081/repository/maven-all/" />

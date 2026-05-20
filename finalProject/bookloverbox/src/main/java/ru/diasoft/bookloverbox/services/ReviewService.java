@@ -121,7 +121,7 @@ public class ReviewService {
         return avg != null ? avg : 0.0;
     }
     
-    private ReviewDto convertToDto(Review review) {
+    public ReviewDto convertToDto(Review review) {
         ReviewDto dto = new ReviewDto();
         dto.setId(review.getId());
         dto.setBookId(review.getBook().getId());

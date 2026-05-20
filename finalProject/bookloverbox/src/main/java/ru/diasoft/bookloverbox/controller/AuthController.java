@@ -3,15 +3,15 @@ package ru.diasoft.bookloverbox.controller;
 
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
-import jakarta.validation.Valid;
+import javax.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import ru.diasoft.bookloverbox.auth.AuthRequest;
 import ru.diasoft.bookloverbox.auth.AuthResponse;
 import ru.diasoft.bookloverbox.auth.AuthService;
-import ru.diasoft.bookloverbox.domain.User;
 import ru.diasoft.bookloverbox.dto.RegisterRequest;
+import ru.diasoft.bookloverbox.dto.UserDto;
 import ru.diasoft.bookloverbox.services.UserService;
 
 @RestController
@@ -25,7 +25,7 @@ public class AuthController {
     
     @PostMapping("/register")
     @Operation(summary = "Регистрация нового пользователя")
-    public ResponseEntity<User> register(@Valid @RequestBody RegisterRequest request) {
+    public ResponseEntity<AuthResponse> register(@Valid @RequestBody RegisterRequest request) {
         return ResponseEntity.ok(userService.registerUser(request));
     }
     

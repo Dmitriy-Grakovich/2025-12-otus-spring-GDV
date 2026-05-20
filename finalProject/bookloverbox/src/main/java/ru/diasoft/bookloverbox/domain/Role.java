@@ -1,9 +1,11 @@
 package ru.diasoft.bookloverbox.domain;
 
-import jakarta.persistence.*;
+import javax.persistence.*;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.AllArgsConstructor;
+import lombok.EqualsAndHashCode;
+import lombok.ToString;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -12,6 +14,8 @@ import java.util.Set;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
+@EqualsAndHashCode(exclude = {"users"})
+@ToString(exclude = {"users"})
 public class Role {
     
     @Id

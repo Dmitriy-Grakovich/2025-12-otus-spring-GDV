@@ -58,4 +58,10 @@ public interface BookRepository extends JpaRepository<Book, Long> {
     @Modifying
     @Query("UPDATE Book b SET b.status = :status, b.publishedAt = :publishedAt WHERE b.id = :id")
     void updateBookStatus(@Param("id") Long id, @Param("status") BookStatus status, @Param("publishedAt") LocalDateTime publishedAt);
+    
+    // Подсчет книг по автору
+    long countByAuthor(User author);
+    
+    // Поиск книг по автору и статусу
+    List<Book> findByAuthorAndStatus(User author, BookStatus status);
 }

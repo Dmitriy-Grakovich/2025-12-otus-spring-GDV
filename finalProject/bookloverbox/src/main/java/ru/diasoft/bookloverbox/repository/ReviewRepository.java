@@ -34,4 +34,6 @@ public interface ReviewRepository extends JpaRepository<Review, Long> {
     @Modifying
     @Query("DELETE FROM Review r WHERE r.book = :book")
     void deleteAllByBook(@Param("book") Book book);
+    
+    long countByUser(User user);
 }
