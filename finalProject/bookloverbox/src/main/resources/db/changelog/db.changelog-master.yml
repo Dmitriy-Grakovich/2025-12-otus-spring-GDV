@@ -1,11 +1,18 @@
 databaseChangeLog:
+  # Убедитесь, что пути правильные
   - include:
-      file: db/changelog/changes/01-create-tables.yml
+      file: db/changelog/changes/01-create-tables.yaml
+      relativeToChangelogFile: false
   - include:
-      file: db/changelog/changes/02-insert-roles.yml
+      file: db/changelog/changes/02-insert-roles.yaml
+      relativeToChangelogFile: false
   - include:
-      file: db/changelog/changes/03-create-books-tables.yml
+      file: db/changelog/changes/03-create-books-tables.yaml
+      relativeToChangelogFile: false
   - include:
-      file: db/changelog/changes/04-insert-genres.yml
+      file: db/changelog/changes/04-insert-genres.yaml
+      relativeToChangelogFile: false
   - include:
-      file: db/changelog/changes/05-insert-users.yml
+      file: db/changelog/changes/05-insert-users.yaml
+      relativeToChangelogFile: false
+

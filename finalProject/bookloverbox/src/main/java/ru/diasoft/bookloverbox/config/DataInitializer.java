@@ -1,4 +1,3 @@
-/*
 package ru.diasoft.bookloverbox.config;
 
 import lombok.RequiredArgsConstructor;
@@ -160,4 +159,3 @@ public class DataInitializer implements CommandLineRunner {
         }
     }
 }
-*/

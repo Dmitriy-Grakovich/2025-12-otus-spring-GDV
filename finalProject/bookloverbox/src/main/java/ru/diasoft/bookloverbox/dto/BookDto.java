@@ -1,6 +1,8 @@
 package ru.diasoft.bookloverbox.dto;
 
 import io.swagger.v3.oas.annotations.media.Schema;
+
+import javax.persistence.Column;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
@@ -11,7 +13,7 @@ import java.time.LocalDateTime;
 @Data
 @Schema(description = "Книга")
 public class BookDto {
-    
+
     private Long id;
     
     @NotBlank(message = "Название книги обязательно")
@@ -56,4 +58,13 @@ public class BookDto {
     
     @Schema(description = "Дата публикации")
     private LocalDateTime publishedAt;
+
+    @Schema(description ="Текст книги")
+    private String content;
+
+    @Schema(description ="Колличество страниц")
+    private Integer pageCount;
+
+    @Schema(description ="Возрастной ценз")
+    private String ageRating = "0+";
 }

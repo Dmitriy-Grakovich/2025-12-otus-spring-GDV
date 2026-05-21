@@ -46,7 +46,7 @@ public class BookService {
         Book book = new Book();
         // Основные поля
         book.setTitle(request.getTitle());
-        book.setAuthorName(request.getAuthorName());
+
         book.setDescription(request.getDescription());
         book.setAuthor(author);
         book.setGenre(genre);
@@ -54,9 +54,8 @@ public class BookService {
         
         // Расширенные поля
         book.setContent(request.getContent());
-        book.setLanguage(request.getLanguage());
-        book.setTags(request.getTags());
-        book.setPublicationYear(request.getPublicationYear());
+
+
         book.setPublisher(request.getPublisher());
         book.setPageCount(request.getPageCount());
         book.setAgeRating(request.getAgeRating());
@@ -221,13 +220,12 @@ public class BookService {
         
         // Обновление полей
         book.setTitle(request.getTitle());
-        book.setAuthorName(request.getAuthorName());
+
         book.setDescription(request.getDescription());
         book.setGenre(genre);
         book.setContent(request.getContent());
-        book.setLanguage(request.getLanguage());
-        book.setTags(request.getTags());
-        book.setPublicationYear(request.getPublicationYear());
+
+
         book.setPublisher(request.getPublisher());
         book.setPageCount(request.getPageCount());
         book.setAgeRating(request.getAgeRating());
@@ -266,6 +264,9 @@ public class BookService {
         dto.setViewsCount(book.getViewsCount());
         dto.setDownloadsCount(book.getDownloadsCount());
         dto.setPublishedAt(book.getPublishedAt());
+        dto.setContent(book.getContent());
+        dto.setPageCount(book.getPageCount());
+        dto.setAgeRating(book.getAgeRating());
         return dto;
     }
 }

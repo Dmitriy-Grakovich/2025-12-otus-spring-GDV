@@ -35,5 +35,6 @@ EXPOSE 8080
 # Настройки JVM для контейнера
 ENV JAVA_OPTS="-XX:+UseContainerSupport -XX:MaxRAMPercentage=75.0"
 
+
 # Запуск приложения
 ENTRYPOINT ["sh", "-c", "java $JAVA_OPTS -jar app.jar"]

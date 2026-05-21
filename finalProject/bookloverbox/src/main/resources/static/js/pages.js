@@ -87,14 +87,7 @@ const pages = {
                     <input type="text" name="title" class="form-input" required maxlength="200" 
                            placeholder="Мастер и Маргарита">
                 </div>
-                
-                <div class="form-group">
-                    <label class="form-label">Автор *</label>
-                    <input type="text" name="authorName" class="form-input" required maxlength="200"
-                           placeholder="Булгаков, Михаил Афанасьевич">
-                    <small style="color: #666;">Формат: Фамилия, Имя Отчество</small>
-                </div>
-                
+                                
                 <div style="display: grid; grid-template-columns: 2fr 1fr; gap: 1rem;">
                     <div class="form-group">
                         <label class="form-label">Жанр *</label>
@@ -102,12 +95,7 @@ const pages = {
                             <option value="">Выберите жанр...</option>
                         </select>
                     </div>
-                    <div class="form-group">
-                        <label class="form-label">Формат файла</label>
-                        <textarea name="content" class="form-input" rows="10" 
-                              placeholder="Вставте текст"></textarea>
-                        
-                    </div>
+                   
                 </div>
                 
                 <div class="form-group">
@@ -115,28 +103,33 @@ const pages = {
                     <textarea name="description" class="form-input" rows="5" 
                               placeholder="Краткое описание книги..."></textarea>
                 </div>
+                 <div class="form-group">
+                        <label class="form-label">Публикуемый текст</label>
+                        <textarea name="content" class="form-input" rows="10" 
+                              placeholder="Вставте текст"></textarea>                        
+                 </div>
                 
-                <div class="form-group">
-                    <label class="form-label">Теги</label>
-                    <input type="text" name="tags" class="form-input" 
-                           placeholder="мистика, сатира, классика">
-                    <small style="color: #666;">Через запятую, до 10 тегов</small>
-                </div>
+<!--                <div class="form-group">-->
+<!--                    <label class="form-label">Теги</label>-->
+<!--                    <input type="text" name="tags" class="form-input" -->
+<!--                           placeholder="мистика, сатира, классика">-->
+<!--                    <small style="color: #666;">Через запятую, до 10 тегов</small>-->
+<!--                </div>-->
                 
                 <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 1rem;">
-                    <div class="form-group">
-                        <label class="form-label">Язык</label>
-                        <select name="language" class="form-input">
-                            <option value="Русский" selected>Русский</option>
-                            <option value="Английский">Английский</option>
-                            <option value="Другой">Другой</option>
-                        </select>
-                    </div>
-                    <div class="form-group">
-                        <label class="form-label">Год издания</label>
-                        <input type="number" name="publicationYear" class="form-input" 
-                               min="1000" max="2100" placeholder="2023">
-                    </div>
+<!--                    <div class="form-group">-->
+<!--                        <label class="form-label">Язык</label>-->
+<!--                        <select name="language" class="form-input">-->
+<!--                            <option value="Русский" selected>Русский</option>-->
+<!--                            <option value="Английский">Английский</option>-->
+<!--                            <option value="Другой">Другой</option>-->
+<!--                        </select>-->
+<!--                    </div>-->
+<!--                    <div class="form-group">-->
+<!--                        <label class="form-label">Год издания</label>-->
+<!--                        <input type="number" name="publicationYear" class="form-input" -->
+<!--                               min="1000" max="2100" placeholder="2023">-->
+<!--                    </div>-->
                     <div class="form-group">
                         <label class="form-label">Возраст</label>
                         <select name="ageRating" class="form-input">
@@ -528,10 +521,10 @@ async function handleAddBook(event) {
         authorName: formData.get('authorName'),
         description: getValueOrNull(formData.get('description')),
         genreId: parseInt(formData.get('genreId')),
-        tags: getValueOrNull(formData.get('tags')),
+        // tags: getValueOrNull(formData.get('tags')),
         content: getValueOrNull(formData.get('content')),
-        language: formData.get('language') || 'Русский',
-        publicationYear: formData.get('publicationYear') ? parseInt(formData.get('publicationYear')) : null,
+        // language: formData.get('language') || 'Русский',
+        // publicationYear: formData.get('publicationYear') ? parseInt(formData.get('publicationYear')) : null,
         publisher: getValueOrNull(formData.get('publisher')),
         pageCount: formData.get('pageCount') ? parseInt(formData.get('pageCount')) : null,
         ageRating: formData.get('ageRating') || '0+',
@@ -578,9 +571,9 @@ async function showBookDetail(bookId) {
                         
                         <div class="book-meta">
                             <span><strong>Жанр:</strong> ${book.genreName || 'Не указан'}</span>
-                            <span><strong>Год издания:</strong> ${book.publicationYear || 'Не указан'}</span>
+<!--                            // <span><strong>Год издания:</strong> ${book.publicationYear || 'Не указан'}</span>-->
                             <span><strong>Страниц:</strong> ${book.pageCount || 'Не указано'}</span>
-                            <span><strong>Язык:</strong> ${book.language || 'Русский'}</span>
+<!--                            <span><strong>Язык:</strong> ${book.language || 'Русский'}</span>-->
                             <span><strong>Возрастной рейтинг:</strong> ${book.ageRating || '0+'}</span>
                         </div>
                         
@@ -589,12 +582,21 @@ async function showBookDetail(bookId) {
                             <p>${book.description || 'Описание отсутствует'}</p>
                         </div>
                         
+                        
+                        
                         ${book.publisher ? `<p><strong>Издательство:</strong> ${book.publisher}</p>` : ''}
                         ${book.isbn ? `<p><strong>ISBN:</strong> ${book.isbn}</p>` : ''}
-                        ${book.tags ? `<p><strong>Теги:</strong> ${book.tags}</p>` : ''}
+<!--                        ${book.tags ? `<p><strong>Теги:</strong> ${book.tags}</p>` : ''}-->
                     </div>
                 </div>
             </div>
+            <div class="form-group">
+                            <label class="form-label"${book.title}</label>
+                            <textarea name="content" class="form-input" rows="10" 
+                                  >
+                                  ${book.content}
+                            </textarea>                        
+                        </div>
             
             <div class="card">
                 <h3>Отзывы (${reviewsList.length})</h3>

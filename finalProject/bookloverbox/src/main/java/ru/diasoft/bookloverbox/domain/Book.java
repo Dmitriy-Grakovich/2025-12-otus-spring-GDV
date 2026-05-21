@@ -44,16 +44,7 @@ public class Book {
 
     @Column(name = "content", columnDefinition = "TEXT")
     private String content;
-    
-//    @Column(name = "language", length = 50)
-//    private String language = "Русский";
-    
-//    @Column(name = "tags", length = 500)
-//    private String tags;
-    
-    @Column(name = "publication_year")
-    private Integer publicationYear;
-    
+
     @Column(name = "publisher", length = 200)
     private String publisher;
     
