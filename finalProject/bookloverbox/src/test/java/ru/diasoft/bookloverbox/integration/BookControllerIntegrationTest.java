@@ -26,14 +26,14 @@ class BookControllerIntegrationTest {
     
     @Test
     void testPublicEndpoint() throws Exception {
-        mockMvc.perform(get("/api/books/public")
+        mockMvc.perform(get("/api/books")
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk());
     }
     
     @Test
     void testSwaggerUiAvailable() throws Exception {
-        mockMvc.perform(get("/swagger-ui.html"))
+        mockMvc.perform(get("/swagger-ui/index.html"))
                 .andExpect(status().isOk());
     }
 }

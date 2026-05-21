@@ -409,7 +409,17 @@ function createModerationCard(book) {
             <div class="book-title">${book.title}</div>
             <div class="book-author">Автор: ${book.authorName || 'Неизвестен'}</div>
             <div class="book-genre">${book.genreName || 'Без жанра'}</div>
-            <div class="book-description">${book.description || 'Нет описания'}</div>
+            <div class="book-description">${book.description || 'Нет описания'}</div>     
+            <div class="form-group">
+                      <label class="form-label">Возраст</label>
+                  <label class="form-label">${book.ageRating}</label>
+            </div>
+            <div class="form-group">
+                            <label class="form-label">${book.title}</label>
+                            <textarea name="content" class="form-input" rows="10">
+                                  ${book.content}
+                            </textarea>                        
+             </div>       
             <div class="book-actions">
                 <button onclick="showModerateModal(${book.id}, \`${description}\`)" class="btn btn-primary">Модерировать</button>
                 <button onclick="showBookDetail(${book.id})" class="btn btn-outline">Подробнее</button>
@@ -516,9 +526,13 @@ async function handleAddBook(event) {
         return value;
     };
     
+    // Получаем имя автора из localStorage или из формы
+    const storedUser = JSON.parse(localStorage.getItem('user') || '{}');
+    const authorName = formData.get('authorName') || storedUser.fullName || storedUser.email || 'Неизвестный автор';
+    
     const bookData = {
         title: formData.get('title'),
-        authorName: formData.get('authorName'),
+        authorName: authorName,
         description: getValueOrNull(formData.get('description')),
         genreId: parseInt(formData.get('genreId')),
         // tags: getValueOrNull(formData.get('tags')),
@@ -560,7 +574,7 @@ async function showBookDetail(bookId) {
         
         container.innerHTML = `
             <div class="card">
-                <button onclick="history.back()" class="btn btn-outline" style="margin-bottom: 20px;">← Назад</button>
+<!--                <button onclick="history.back()" class="btn btn-outline" style="margin-bottom: 20px;">← Назад</button>-->
                 
                 <div class="book-detail">
                     ${book.coverUrl ? `<img src="${book.coverUrl}" alt="${book.title}" class="book-detail-cover">` : ''}
@@ -672,7 +686,7 @@ function showModerateModal(bookId, currentDescription) {
                 <div class="form-group">
                     <label>Описание книги (можно отредактировать)</label>
                     <textarea name="description" rows="6" class="form-control">${currentDescription || ''}</textarea>
-                </div>
+                </div>               
                 <div class="form-actions">
                     <button type="submit" name="action" value="approve" class="btn btn-success">✓ Опубликовать в библиотеку</button>
                     <button type="submit" name="action" value="reject" class="btn btn-warning">← Вернуть в черновики</button>
