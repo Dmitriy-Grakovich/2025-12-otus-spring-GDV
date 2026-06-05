@@ -53,8 +53,8 @@ public interface BookRepository extends JpaRepository<Book, Long> {
     // Поиск опубликованных книг
     Page<Book> findByStatusOrderByPublishedAtDesc(BookStatus status, Pageable pageable);
     
-    // Поиск по названию (case-insensitive)
-    @Query("SELECT b FROM Book b WHERE LOWER(b.title) LIKE LOWER(CONCAT('%', :title, '%')) AND b.status = 'PUBLISHED'")
+    // Поиск по названию (case-insensitive) - параметр должен содержать % знаки
+    @Query("SELECT b FROM Book b WHERE LOWER(b.title) LIKE LOWER(:title) AND b.status = 'PUBLISHED'")
     Page<Book> searchByTitle(@Param("title") String title, Pageable pageable);
     
     // Топ книг по просмотрам

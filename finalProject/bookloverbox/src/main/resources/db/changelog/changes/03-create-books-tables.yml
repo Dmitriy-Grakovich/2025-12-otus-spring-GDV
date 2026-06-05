@@ -45,6 +45,16 @@ databaseChangeLog:
             referencedTableName: genres
             referencedColumnNames: id
 
+        # Добавление缺失ных полей в таблицу books
+        -addColumn:
+            tableName: books
+            columns:
+              - column: { name: updated_at, type: timestamp }
+              - column: { name: publisher, type: varchar(200) }
+              - column: { name: page_count, type: bigint }
+              - column: { name: copyright_holder, type: varchar(200) }
+              - column: { name: isbn, type: varchar(20) }
+
         # Таблица отзывов
         - createTable:
             tableName: reviews

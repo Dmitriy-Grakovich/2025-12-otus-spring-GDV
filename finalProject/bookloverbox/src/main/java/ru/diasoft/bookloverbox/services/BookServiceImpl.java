@@ -197,7 +197,9 @@ public class BookServiceImpl implements IBookService {
     
     public Page<BookDto> searchBooks(String title, int page, int size) {
         Pageable pageable = PageRequest.of(page, size);
-        return bookRepository.searchByTitle(title, pageable)
+        // Добавляем % для поиска подстроки
+        String searchPattern = "%" + title + "%";
+        return bookRepository.searchByTitle(searchPattern, pageable)
             .map(this::convertToDto);
     }
     
