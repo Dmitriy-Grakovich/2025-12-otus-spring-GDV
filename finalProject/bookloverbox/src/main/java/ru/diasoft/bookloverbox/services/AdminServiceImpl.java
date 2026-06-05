@@ -19,7 +19,7 @@ import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
-public class AdminService {
+public class AdminServiceImpl implements IAdminService {
     
     private final UserRepository userRepository;
     private final BookRepository bookRepository;

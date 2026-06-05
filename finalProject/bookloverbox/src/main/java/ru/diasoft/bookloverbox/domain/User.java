@@ -45,8 +45,8 @@ public class User implements UserDetails {
     @Column(name = "created_at")
     private LocalDateTime createdAt;
     
-    // Связь многие-ко-многим с ролями
-    @ManyToMany(fetch = FetchType.EAGER)
+    // Связь многие-ко-многим с ролями (LAZY для предотвращения N+1)
+    @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(
         name = "user_roles",
         joinColumns = @JoinColumn(name = "user_id"),

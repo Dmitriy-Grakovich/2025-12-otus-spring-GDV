@@ -26,7 +26,7 @@ import java.time.LocalDateTime;
 
 @Service
 @RequiredArgsConstructor
-public class BookService {
+public class BookServiceImpl implements IBookService {
     
     private final BookRepository bookRepository;
     private final UserRepository userRepository;
@@ -167,7 +167,8 @@ public class BookService {
     @Cacheable(value = CacheConfig.BOOKS_CACHE, key = "#page + '-' + #size")
     public Page<BookDto> getPublishedBooks(int page, int size) {
         Pageable pageable = PageRequest.of(page, size);
-        return bookRepository.findByStatusOrderByPublishedAtDesc(BookStatus.PUBLISHED, pageable)
+        // Используем JOIN FETCH для предотвращения N+1 при доступе к author и genre
+        return bookRepository.findByStatusOrderByPublishedAtDescWithFetch(BookStatus.PUBLISHED, pageable)
             .map(this::convertToDto);
     }
     
@@ -189,7 +190,8 @@ public class BookService {
             .orElseThrow(() -> new RuntimeException("Автор не найден"));
         
         Pageable pageable = PageRequest.of(page, size);
-        return bookRepository.findByAuthor(author, pageable)
+        // Используем JOIN FETCH для предотвращения N+1
+        return bookRepository.findByAuthorWithFetch(author, pageable)
             .map(this::convertToDto);
     }
     

@@ -10,7 +10,7 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import ru.diasoft.bookloverbox.domain.Genre;
 import ru.diasoft.bookloverbox.dto.GenreDto;
-import ru.diasoft.bookloverbox.services.GenreService;
+import ru.diasoft.bookloverbox.services.IGenreService;
 
 import java.util.List;
 
@@ -20,7 +20,7 @@ import java.util.List;
 @Tag(name = "Genres", description = "Управление жанрами")
 public class GenreController {
 
-    private final GenreService genreService;
+    private final IGenreService genreService;
 
     @GetMapping
     @Operation(summary = "Получить все жанры")

@@ -15,7 +15,7 @@ import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
-public class GenreService {
+public class GenreServiceImpl implements IGenreService {
     
     private final GenreRepository genreRepository;
     

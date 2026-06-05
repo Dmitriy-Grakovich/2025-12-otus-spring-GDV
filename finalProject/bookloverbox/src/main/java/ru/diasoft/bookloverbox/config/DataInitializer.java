@@ -14,6 +14,9 @@ import ru.diasoft.bookloverbox.repository.RoleRepository;
 import ru.diasoft.bookloverbox.repository.UserRepository;
 
 import java.util.HashSet;
+import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 @Component
 @RequiredArgsConstructor
@@ -28,20 +31,24 @@ public class DataInitializer implements CommandLineRunner {
     @Override
     @Transactional
     public void run(String... args) {
-        // Создание ролей
+        // Создание ролей одним запросом
         initRoles();
         
-        // Создание жанров
+        // Создание жанров одним запросом
         initGenres();
         
         // Создание пользователей
         if (userRepository.count() == 0) {
             log.info("Инициализация тестовых пользователей...");
             
-            Role adminRole = roleRepository.findByName(Role.ADMIN).orElseThrow();
-            Role moderatorRole = roleRepository.findByName(Role.MODERATOR).orElseThrow();
-            Role authorRole = roleRepository.findByName(Role.AUTHOR).orElseThrow();
-            Role readerRole = roleRepository.findByName(Role.READER).orElseThrow();
+            // Загружаем все роли одним запросом и создаем карту для быстрого доступа
+            Map<String, Role> rolesMap = roleRepository.findAll().stream()
+                    .collect(Collectors.toMap(Role::getName, role -> role));
+            
+            Role adminRole = rolesMap.get(Role.ADMIN);
+            Role moderatorRole = rolesMap.get(Role.MODERATOR);
+            Role authorRole = rolesMap.get(Role.AUTHOR);
+            Role readerRole = rolesMap.get(Role.READER);
             
             // Создание администратора
             User admin = new User();
@@ -104,10 +111,13 @@ public class DataInitializer implements CommandLineRunner {
         if (roleRepository.count() == 0) {
             log.info("Создание ролей...");
             
-            roleRepository.save(new Role(Role.ADMIN, "Администратор системы"));
-            roleRepository.save(new Role(Role.MODERATOR, "Модератор контента"));
-            roleRepository.save(new Role(Role.AUTHOR, "Автор книг"));
-            roleRepository.save(new Role(Role.READER, "Читатель"));
+            // Создаем все роли одним запросом saveAll()
+            roleRepository.saveAll(List.of(
+                    new Role(Role.ADMIN, "Администратор системы"),
+                    new Role(Role.MODERATOR, "Модератор контента"),
+                    new Role(Role.AUTHOR, "Автор книг"),
+                    new Role(Role.READER, "Читатель")
+            ));
             
             log.info("Роли созданы");
         }
@@ -117,43 +127,42 @@ public class DataInitializer implements CommandLineRunner {
         if (genreRepository.count() == 0) {
             log.info("Создание жанров...");
             
-            // Художественная литература
-            genreRepository.save(new Genre("Классическая литература", "Произведения классиков мировой литературы"));
-            genreRepository.save(new Genre("Современная проза", "Современная художественная литература"));
-            genreRepository.save(new Genre("Фантастика", "Научная фантастика и космические приключения"));
-            genreRepository.save(new Genre("Фэнтези", "Магия, драконы и волшебные миры"));
-            genreRepository.save(new Genre("Детектив", "Детективы и криминальные романы"));
-            genreRepository.save(new Genre("Триллер", "Напряженные и захватывающие истории"));
-            genreRepository.save(new Genre("Роман", "Любовные и семейные романы"));
-            genreRepository.save(new Genre("Приключения", "Приключенческие романы"));
-            genreRepository.save(new Genre("Ужасы", "Мистика и ужасы"));
-            genreRepository.save(new Genre("Историческая проза", "Исторические романы"));
-            
-            // Поэзия и драматургия
-            genreRepository.save(new Genre("Поэзия", "Стихи и поэмы"));
-            genreRepository.save(new Genre("Драматургия", "Пьесы и сценарии"));
-            
-            // Детская литература
-            genreRepository.save(new Genre("Детская литература", "Книги для детей"));
-            genreRepository.save(new Genre("Подростковая литература", "Книги для подростков"));
-            genreRepository.save(new Genre("Сказки", "Народные и авторские сказки"));
-            
-            // Нехудожественная литература
-            genreRepository.save(new Genre("Научная литература", "Научные и научно-популярные книги"));
-            genreRepository.save(new Genre("Бизнес", "Книги о бизнесе и предпринимательстве"));
-            genreRepository.save(new Genre("Психология", "Книги по психологии"));
-            genreRepository.save(new Genre("Саморазвитие", "Книги по личностному росту"));
-            genreRepository.save(new Genre("История", "Исторические исследования"));
-            genreRepository.save(new Genre("Биография", "Биографии и мемуары"));
-            genreRepository.save(new Genre("Философия", "Философские труды"));
-            genreRepository.save(new Genre("Религия", "Религиозная литература"));
-            genreRepository.save(new Genre("Кулинария", "Кулинарные книги и рецепты"));
-            genreRepository.save(new Genre("Путешествия", "Путеводители и книги о путешествиях"));
-            
-            // Специальная литература
-            genreRepository.save(new Genre("Программирование", "Книги по программированию и IT"));
-            genreRepository.save(new Genre("Учебная литература", "Учебники и учебные пособия"));
-            genreRepository.save(new Genre("Справочники", "Справочная литература"));
+            // Создаем все жанры одним запросом saveAll()
+            genreRepository.saveAll(List.of(
+                    // Художественная литература
+                    new Genre("Классическая литература", "Произведения классиков мировой литературы"),
+                    new Genre("Современная проза", "Современная художественная литература"),
+                    new Genre("Фантастика", "Научная фантастика и космические приключения"),
+                    new Genre("Фэнтези", "Магия, драконы и волшебные миры"),
+                    new Genre("Детектив", "Детективы и криминальные романы"),
+                    new Genre("Триллер", "Напряженные и захватывающие истории"),
+                    new Genre("Роман", "Любовные и семейные романы"),
+                    new Genre("Приключения", "Приключенческие романы"),
+                    new Genre("Ужасы", "Мистика и ужасы"),
+                    new Genre("Историческая проза", "Исторические романы"),
+                    // Поэзия и драматургия
+                    new Genre("Поэзия", "Стихи и поэмы"),
+                    new Genre("Драматургия", "Пьесы и сценарии"),
+                    // Детская литература
+                    new Genre("Детская литература", "Книги для детей"),
+                    new Genre("Подростковая литература", "Книги для подростков"),
+                    new Genre("Сказки", "Народные и авторские сказки"),
+                    // Нехудожественная литература
+                    new Genre("Научная литература", "Научные и научно-популярные книги"),
+                    new Genre("Бизнес", "Книги о бизнесе и предпринимательстве"),
+                    new Genre("Психология", "Книги по психологии"),
+                    new Genre("Саморазвитие", "Книги по личностному росту"),
+                    new Genre("История", "Исторические исследования"),
+                    new Genre("Биография", "Биографии и мемуары"),
+                    new Genre("Философия", "Философские труды"),
+                    new Genre("Религия", "Религиозная литература"),
+                    new Genre("Кулинария", "Кулинарные книги и рецепты"),
+                    new Genre("Путешествия", "Путеводители и книги о путешествиях"),
+                    // Специальная литература
+                    new Genre("Программирование", "Книги по программированию и IT"),
+                    new Genre("Учебная литература", "Учебники и учебные пособия"),
+                    new Genre("Справочники", "Справочная литература")
+            ));
             
             log.info("Создано {} жанров", genreRepository.count());
         }

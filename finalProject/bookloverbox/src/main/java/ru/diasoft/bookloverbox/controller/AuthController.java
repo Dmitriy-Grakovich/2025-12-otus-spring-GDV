@@ -9,10 +9,10 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import ru.diasoft.bookloverbox.auth.AuthRequest;
 import ru.diasoft.bookloverbox.auth.AuthResponse;
-import ru.diasoft.bookloverbox.auth.AuthService;
 import ru.diasoft.bookloverbox.dto.RegisterRequest;
 import ru.diasoft.bookloverbox.dto.UserDto;
-import ru.diasoft.bookloverbox.services.UserService;
+import ru.diasoft.bookloverbox.services.IAuthService;
+import ru.diasoft.bookloverbox.services.IUserService;
 
 @RestController
 @RequestMapping("/api/auth")
@@ -20,8 +20,8 @@ import ru.diasoft.bookloverbox.services.UserService;
 @Tag(name = "Authentication", description = "Аутентификация и регистрация")
 public class AuthController {
     
-    private final AuthService authService;
-    private final UserService userService;
+    private final IAuthService authService;
+    private final IUserService userService;
     
     @PostMapping("/register")
     @Operation(summary = "Регистрация нового пользователя")

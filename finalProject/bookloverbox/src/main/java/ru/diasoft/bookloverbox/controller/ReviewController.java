@@ -12,7 +12,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 import ru.diasoft.bookloverbox.domain.Review;
 import ru.diasoft.bookloverbox.dto.ReviewDto;
-import ru.diasoft.bookloverbox.services.ReviewService;
+import ru.diasoft.bookloverbox.services.IReviewService;
 
 @RestController
 @RequestMapping("/api/reviews")
@@ -20,7 +20,7 @@ import ru.diasoft.bookloverbox.services.ReviewService;
 @Tag(name = "Reviews", description = "Отзывы на книги")
 public class ReviewController {
     
-    private final ReviewService reviewService;
+    private final IReviewService reviewService;
     
     @PostMapping("/books/{bookId}")
     @Operation(summary = "Оставить отзыв")

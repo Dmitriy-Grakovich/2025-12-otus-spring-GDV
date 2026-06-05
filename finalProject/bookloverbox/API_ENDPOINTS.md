@@ -88,15 +88,15 @@
 public ResponseEntity<BookDto> updateBook(@PathVariable Long id,
                                           @Valid @RequestBody CreateBookRequest request,
                                           @AuthenticationPrincipal UserDetails user) {
-    Book book = bookService.updateBook(id, request, user.getUsername());
-    return ResponseEntity.ok(bookService.convertToDto(book));
+    Book book = bookServiceImpl.updateBook(id, request, user.getUsername());
+    return ResponseEntity.ok(bookServiceImpl.convertToDto(book));
 }
 
 @DeleteMapping("/{id}")
 @Operation(summary = "Удалить книгу")
 public ResponseEntity<Void> deleteBook(@PathVariable Long id,
                                       @AuthenticationPrincipal UserDetails user) {
-    bookService.deleteBook(id, user.getUsername());
+    bookServiceImpl.deleteBook(id, user.getUsername());
     return ResponseEntity.ok().build();
 }
 ```

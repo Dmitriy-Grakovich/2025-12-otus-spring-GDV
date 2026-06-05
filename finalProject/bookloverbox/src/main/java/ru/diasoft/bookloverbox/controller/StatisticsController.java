@@ -7,7 +7,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import ru.diasoft.bookloverbox.dto.UserStatsDto;
-import ru.diasoft.bookloverbox.services.AdminService;
+import ru.diasoft.bookloverbox.services.IAdminService;
 
 import java.util.List;
 import java.util.Map;
@@ -18,7 +18,7 @@ import java.util.Map;
 @Tag(name = "Statistics", description = "Статистика портала")
 public class StatisticsController {
     
-    private final AdminService adminService;
+    private final IAdminService adminService;
     
     @GetMapping("/users")
     @PreAuthorize("hasRole('ADMIN')")

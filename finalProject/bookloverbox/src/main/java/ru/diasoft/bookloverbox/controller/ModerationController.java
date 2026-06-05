@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.*;
 import ru.diasoft.bookloverbox.domain.Book;
 import ru.diasoft.bookloverbox.dto.BookDto;
 import ru.diasoft.bookloverbox.dto.ModerateBookRequest;
-import ru.diasoft.bookloverbox.services.BookService;
+import ru.diasoft.bookloverbox.services.IBookService;
 
 @RestController
 @RequestMapping("/api/moderator")
@@ -19,7 +19,7 @@ import ru.diasoft.bookloverbox.services.BookService;
 @Tag(name = "Moderation", description = "Модерация книг")
 public class ModerationController {
     
-    private final BookService bookService;
+    private final IBookService bookService;
     
     @GetMapping("/books/pending")
     @Operation(summary = "Получить книги на модерации")

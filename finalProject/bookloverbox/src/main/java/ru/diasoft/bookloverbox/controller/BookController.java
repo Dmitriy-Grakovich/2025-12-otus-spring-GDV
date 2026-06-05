@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.*;
 import ru.diasoft.bookloverbox.domain.Book;
 import ru.diasoft.bookloverbox.dto.BookDto;
 import ru.diasoft.bookloverbox.dto.CreateBookRequest;
-import ru.diasoft.bookloverbox.services.BookService;
+import ru.diasoft.bookloverbox.services.IBookService;
 
 @RestController
 @RequestMapping("/api/books")
@@ -21,7 +21,7 @@ import ru.diasoft.bookloverbox.services.BookService;
 @Tag(name = "Books", description = "Управление книгами")
 public class BookController {
     
-    private final BookService bookService;
+    private final IBookService bookService;
     
     @PostMapping
     @Operation(summary = "Создать новую книгу с полным описанием")

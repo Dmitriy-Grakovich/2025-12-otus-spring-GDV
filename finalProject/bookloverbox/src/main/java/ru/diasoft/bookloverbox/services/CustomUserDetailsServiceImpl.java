@@ -10,13 +10,15 @@ import ru.diasoft.bookloverbox.repository.UserRepository;
 
 @Service
 @RequiredArgsConstructor
-public class CustomUserDetailsService implements UserDetailsService {
+public class CustomUserDetailsServiceImpl implements UserDetailsService {
     
     private final UserRepository userRepository;
     
     @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
-        return userRepository.findByEmail(email)
+        // Используем findByEmailWithRoles для загрузки ролей через JOIN FETCH
+        // Это предотвращает LazyInitializationException при LAZY fetch ролей
+        return userRepository.findByEmailWithRoles(email)
             .orElseThrow(() -> new UsernameNotFoundException("Пользователь не найден: " + email));
     }
 }

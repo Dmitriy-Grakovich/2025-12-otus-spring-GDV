@@ -16,6 +16,7 @@ import ru.diasoft.bookloverbox.domain.User;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 public interface BookRepository extends JpaRepository<Book, Long> {
@@ -27,6 +28,24 @@ public interface BookRepository extends JpaRepository<Book, Long> {
     // Поиск по статусу
     List<Book> findByStatus(BookStatus status);
     Page<Book> findByStatus(BookStatus status, Pageable pageable);
+    
+    // Поиск по статусу с JOIN FETCH (предотвращает N+1 для author и genre)
+    @Query("SELECT DISTINCT b FROM Book b LEFT JOIN FETCH b.author LEFT JOIN FETCH b.genre WHERE b.status = :status")
+    List<Book> findByStatusWithAssociations(@Param("status") BookStatus status);
+    
+    // Пагинированные версии с явным countQuery (обход ограничения FETCH + Page)
+    @Query(value = "SELECT DISTINCT b FROM Book b LEFT JOIN FETCH b.author LEFT JOIN FETCH b.genre WHERE b.status = :status ORDER BY b.publishedAt DESC",
+           countQuery = "SELECT COUNT(DISTINCT b) FROM Book b WHERE b.status = :status")
+    Page<Book> findByStatusOrderByPublishedAtDescWithFetch(@Param("status") BookStatus status, Pageable pageable);
+    
+    // Поиск опубликованных книг с ассоциациями (для convertToDto без N+1)
+    @Query("SELECT DISTINCT b FROM Book b LEFT JOIN FETCH b.author LEFT JOIN FETCH b.genre WHERE b.id = :id")
+    Optional<Book> findByIdWithAssociations(@Param("id") Long id);
+    
+    // Книги автора с ассоциациями (пагинированный с явным countQuery)
+    @Query(value = "SELECT DISTINCT b FROM Book b LEFT JOIN FETCH b.author LEFT JOIN FETCH b.genre WHERE b.author = :author",
+           countQuery = "SELECT COUNT(DISTINCT b) FROM Book b WHERE b.author = :author")
+    Page<Book> findByAuthorWithFetch(@Param("author") User author, Pageable pageable);
     
     // Поиск по жанру
     Page<Book> findByGenreIdAndStatus(Long genreId, BookStatus status, Pageable pageable);

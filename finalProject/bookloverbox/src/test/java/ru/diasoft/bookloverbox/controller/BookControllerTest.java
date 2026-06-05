@@ -10,7 +10,6 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -27,14 +26,14 @@ import static org.mockito.Mockito.*;
 import ru.diasoft.bookloverbox.domain.Book;
 import ru.diasoft.bookloverbox.dto.BookDto;
 import ru.diasoft.bookloverbox.dto.CreateBookRequest;
-import ru.diasoft.bookloverbox.services.BookService;
+import ru.diasoft.bookloverbox.services.BookServiceImpl;
 
 @ExtendWith(MockitoExtension.class)
 @DisplayName("BookController Unit Tests")
 class BookControllerTest {
 
     @Mock
-    private BookService bookService;
+    private BookServiceImpl bookServiceImpl;
 
     @Mock
     private UserDetails userDetails;
@@ -93,23 +92,23 @@ class BookControllerTest {
         @Test
         @DisplayName("Должно вернуть созданную книгу при успешном создании")
         void createBook_Success() {
-            when(bookService.createBookFromRequest(any(CreateBookRequest.class), anyString()))
+            when(bookServiceImpl.createBookFromRequest(any(CreateBookRequest.class), anyString()))
                     .thenReturn(testBook);
-            when(bookService.convertToDto(any(Book.class))).thenReturn(testBookDto);
+            when(bookServiceImpl.convertToDto(any(Book.class))).thenReturn(testBookDto);
 
             ResponseEntity<BookDto> response = bookController.createBook(createBookRequest, userDetails);
 
             assertThat(response).isNotNull();
             assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
             assertThat(response.getBody()).isEqualTo(testBookDto);
-            verify(bookService).createBookFromRequest(createBookRequest, "test@example.com");
-            verify(bookService).convertToDto(testBook);
+            verify(bookServiceImpl).createBookFromRequest(createBookRequest, "test@example.com");
+            verify(bookServiceImpl).convertToDto(testBook);
         }
 
         @Test
         @DisplayName("Должно выбросить исключение при ошибке сервиса")
         void createBook_ServiceThrowsException() {
-            when(bookService.createBookFromRequest(any(CreateBookRequest.class), anyString()))
+            when(bookServiceImpl.createBookFromRequest(any(CreateBookRequest.class), anyString()))
                     .thenThrow(new RuntimeException("Ошибка создания книги"));
 
             assertThatThrownBy(() -> bookController.createBook(createBookRequest, userDetails))
@@ -125,21 +124,21 @@ class BookControllerTest {
         @Test
         @DisplayName("Должно отправить книгу на модерацию")
         void submitToModeration_Success() {
-            when(bookService.submitToModeration(1L, "test@example.com")).thenReturn(testBook);
-            when(bookService.convertToDto(any(Book.class))).thenReturn(testBookDto);
+            when(bookServiceImpl.submitToModeration(1L, "test@example.com")).thenReturn(testBook);
+            when(bookServiceImpl.convertToDto(any(Book.class))).thenReturn(testBookDto);
 
             ResponseEntity<BookDto> response = bookController.submitToModeration(1L, userDetails);
 
             assertThat(response).isNotNull();
             assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
             assertThat(response.getBody()).isEqualTo(testBookDto);
-            verify(bookService).submitToModeration(1L, "test@example.com");
+            verify(bookServiceImpl).submitToModeration(1L, "test@example.com");
         }
 
         @Test
         @DisplayName("Должно выбросить исключение при отсутствии книги")
         void submitToModeration_BookNotFound() {
-            when(bookService.submitToModeration(999L, "test@example.com"))
+            when(bookServiceImpl.submitToModeration(999L, "test@example.com"))
                     .thenThrow(new RuntimeException("Книга не найдена"));
 
             assertThatThrownBy(() -> bookController.submitToModeration(999L, userDetails))
@@ -156,7 +155,7 @@ class BookControllerTest {
         @DisplayName("Должно вернуть страницу опубликованных книг")
         void getPublishedBooks_Success() {
             Page<BookDto> bookPage = new PageImpl<>(List.of(testBookDto));
-            when(bookService.getPublishedBooks(0, 10)).thenReturn(bookPage);
+            when(bookServiceImpl.getPublishedBooks(0, 10)).thenReturn(bookPage);
 
             ResponseEntity<Page<BookDto>> response = bookController.getPublishedBooks(0, 10);
 
@@ -171,7 +170,7 @@ class BookControllerTest {
         @DisplayName("Должно вернуть пустую страницу при отсутствии книг")
         void getPublishedBooks_EmptyPage() {
             Page<BookDto> emptyPage = new PageImpl<>(List.of());
-            when(bookService.getPublishedBooks(0, 10)).thenReturn(emptyPage);
+            when(bookServiceImpl.getPublishedBooks(0, 10)).thenReturn(emptyPage);
 
             ResponseEntity<Page<BookDto>> response = bookController.getPublishedBooks(0, 10);
 
@@ -184,12 +183,12 @@ class BookControllerTest {
         @DisplayName("Должно использовать значения по умолчанию для пагинации")
         void getPublishedBooks_DefaultPagination() {
             Page<BookDto> bookPage = new PageImpl<>(List.of(testBookDto));
-            when(bookService.getPublishedBooks(0, 10)).thenReturn(bookPage);
+            when(bookServiceImpl.getPublishedBooks(0, 10)).thenReturn(bookPage);
 
             ResponseEntity<Page<BookDto>> response = bookController.getPublishedBooks(0, 10);
 
             assertThat(response.getBody()).isNotNull();
-            verify(bookService).getPublishedBooks(0, 10);
+            verify(bookServiceImpl).getPublishedBooks(0, 10);
         }
     }
 
@@ -200,7 +199,7 @@ class BookControllerTest {
         @Test
         @DisplayName("Должно вернуть книгу по ID")
         void getBookById_Success() {
-            when(bookService.getBookById(1L)).thenReturn(testBookDto);
+            when(bookServiceImpl.getBookById(1L)).thenReturn(testBookDto);
 
             ResponseEntity<BookDto> response = bookController.getBookById(1L);
 
@@ -213,7 +212,7 @@ class BookControllerTest {
         @Test
         @DisplayName("Должно выбросить исключение при отсутствии книги")
         void getBookById_NotFound() {
-            when(bookService.getBookById(999L))
+            when(bookServiceImpl.getBookById(999L))
                     .thenThrow(new RuntimeException("Книга не найдена"));
 
             assertThatThrownBy(() -> bookController.getBookById(999L))
@@ -230,21 +229,21 @@ class BookControllerTest {
         @DisplayName("Должно вернуть книги автора")
         void getMyBooks_Success() {
             Page<BookDto> bookPage = new PageImpl<>(List.of(testBookDto));
-            when(bookService.getBooksByAuthor("test@example.com", 0, 10)).thenReturn(bookPage);
+            when(bookServiceImpl.getBooksByAuthor("test@example.com", 0, 10)).thenReturn(bookPage);
 
             ResponseEntity<Page<BookDto>> response = bookController.getMyBooks(userDetails, 0, 10);
 
             assertThat(response).isNotNull();
             assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
             assertThat(response.getBody().getContent()).hasSize(1);
-            verify(bookService).getBooksByAuthor("test@example.com", 0, 10);
+            verify(bookServiceImpl).getBooksByAuthor("test@example.com", 0, 10);
         }
 
         @Test
         @DisplayName("Должно вернуть пустую страницу если у автора нет книг")
         void getMyBooks_EmptyPage() {
             Page<BookDto> emptyPage = new PageImpl<>(List.of());
-            when(bookService.getBooksByAuthor("test@example.com", 0, 10)).thenReturn(emptyPage);
+            when(bookServiceImpl.getBooksByAuthor("test@example.com", 0, 10)).thenReturn(emptyPage);
 
             ResponseEntity<Page<BookDto>> response = bookController.getMyBooks(userDetails, 0, 10);
 
@@ -260,7 +259,7 @@ class BookControllerTest {
         @DisplayName("Должно вернуть найденные книги")
         void searchBooks_Success() {
             Page<BookDto> bookPage = new PageImpl<>(List.of(testBookDto));
-            when(bookService.searchBooks("Мастер", 0, 10)).thenReturn(bookPage);
+            when(bookServiceImpl.searchBooks("Мастер", 0, 10)).thenReturn(bookPage);
 
             ResponseEntity<Page<BookDto>> response = bookController.searchBooks("Мастер", 0, 10);
 
@@ -274,7 +273,7 @@ class BookControllerTest {
         @DisplayName("Должно вернуть пустую страницу при отсутствии результатов")
         void searchBooks_NoResults() {
             Page<BookDto> emptyPage = new PageImpl<>(List.of());
-            when(bookService.searchBooks("Неизвестная книга", 0, 10)).thenReturn(emptyPage);
+            when(bookServiceImpl.searchBooks("Неизвестная книга", 0, 10)).thenReturn(emptyPage);
 
             ResponseEntity<Page<BookDto>> response = bookController.searchBooks("Неизвестная книга", 0, 10);
 
@@ -290,22 +289,22 @@ class BookControllerTest {
         @DisplayName("Должно обновить книгу")
         void updateBook_Success() {
             createBookRequest.setTitle("Обновленное название");
-            when(bookService.updateBook(eq(1L), any(CreateBookRequest.class), eq("test@example.com")))
+            when(bookServiceImpl.updateBook(eq(1L), any(CreateBookRequest.class), eq("test@example.com")))
                     .thenReturn(testBook);
-            when(bookService.convertToDto(any(Book.class))).thenReturn(testBookDto);
+            when(bookServiceImpl.convertToDto(any(Book.class))).thenReturn(testBookDto);
 
             ResponseEntity<BookDto> response = bookController.updateBook(1L, createBookRequest, userDetails);
 
             assertThat(response).isNotNull();
             assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
             assertThat(response.getBody()).isEqualTo(testBookDto);
-            verify(bookService).updateBook(1L, createBookRequest, "test@example.com");
+            verify(bookServiceImpl).updateBook(1L, createBookRequest, "test@example.com");
         }
 
         @Test
         @DisplayName("Должно выбросить исключение при отсутствии книги")
         void updateBook_BookNotFound() {
-            when(bookService.updateBook(eq(999L), any(CreateBookRequest.class), anyString()))
+            when(bookServiceImpl.updateBook(eq(999L), any(CreateBookRequest.class), anyString()))
                     .thenThrow(new RuntimeException("Книга не найдена"));
 
             assertThatThrownBy(() -> bookController.updateBook(999L, createBookRequest, userDetails))
@@ -321,13 +320,13 @@ class BookControllerTest {
         @Test
         @DisplayName("Должно удалить книгу и вернуть OK")
         void deleteBook_Success() {
-            doNothing().when(bookService).deleteBook(1L, "test@example.com");
+            doNothing().when(bookServiceImpl).deleteBook(1L, "test@example.com");
 
             ResponseEntity<Void> response = bookController.deleteBook(1L, userDetails);
 
             assertThat(response).isNotNull();
             assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
-            verify(bookService).deleteBook(1L, "test@example.com");
+            verify(bookServiceImpl).deleteBook(1L, "test@example.com");
         }
 
 

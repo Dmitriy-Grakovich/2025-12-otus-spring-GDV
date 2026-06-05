@@ -23,7 +23,7 @@ import java.time.LocalDateTime;
 
 @Service
 @RequiredArgsConstructor
-public class ReviewService {
+public class ReviewServiceImpl implements IReviewService {
     
     private final ReviewRepository reviewRepository;
     private final BookRepository bookRepository;

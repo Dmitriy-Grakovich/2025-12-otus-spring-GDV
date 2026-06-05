@@ -7,13 +7,14 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.stereotype.Service;
 import ru.diasoft.bookloverbox.domain.User;
 import ru.diasoft.bookloverbox.repository.UserRepository;
+import ru.diasoft.bookloverbox.services.IAuthService;
 import ru.diasoft.bookloverbox.security.JwtService;
 
 import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
-public class AuthService {
+public class AuthService implements IAuthService {
     
     private final UserRepository userRepository;
     private final AuthenticationManager authenticationManager;

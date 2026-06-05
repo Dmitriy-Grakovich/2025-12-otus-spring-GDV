@@ -9,8 +9,8 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import ru.diasoft.bookloverbox.domain.User;
 import ru.diasoft.bookloverbox.dto.UserStatsDto;
-import ru.diasoft.bookloverbox.services.AdminService;
-import ru.diasoft.bookloverbox.services.UserService;
+import ru.diasoft.bookloverbox.services.IAdminService;
+import ru.diasoft.bookloverbox.services.IUserService;
 
 import java.util.List;
 import java.util.Map;
@@ -22,8 +22,8 @@ import java.util.Map;
 @Tag(name = "Admin", description = "Администрирование (только ADMIN)")
 public class AdminController {
     
-    private final AdminService adminService;
-    private final UserService userService;
+    private final IAdminService adminService;
+    private final IUserService userService;
     
     @GetMapping("/users")
     @Operation(summary = "Получить всех пользователей")
