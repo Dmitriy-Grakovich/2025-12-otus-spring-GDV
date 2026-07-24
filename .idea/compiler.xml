@@ -9,6 +9,7 @@
         <outputRelativeToContentRoot value="true" />
         <module name="task01" />
         <module name="spring" />
+        <module name="bookloverbox" />
         <module name="spring (2)" />
         <module name="spring (1)" />
       </profile>
@@ -22,6 +23,16 @@
           <entry name="$MAVEN_REPOSITORY$/org/projectlombok/lombok/1.18.30/lombok-1.18.30.jar" />
         </processorPath>
         <module name="orderitem-service" />
+      </profile>
+      <profile name="Annotation profile for tasklesson23" enabled="true">
+        <sourceOutputDir name="target/generated-sources/annotations" />
+        <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
+        <outputRelativeToContentRoot value="true" />
+        <processorPath useClasspath="false">
+          <entry name="$MAVEN_REPOSITORY$/org/mapstruct/mapstruct-processor/1.5.5.Final/mapstruct-processor-1.5.5.Final.jar" />
+          <entry name="$MAVEN_REPOSITORY$/org/mapstruct/mapstruct/1.5.5.Final/mapstruct-1.5.5.Final.jar" />
+          <entry name="$MAVEN_REPOSITORY$/org/projectlombok/lombok/1.18.40/lombok-1.18.40.jar" />
+        </processorPath>
         <module name="tasklesson23" />
         <module name="tasklesson16" />
       </profile>
@@ -29,6 +40,7 @@
   </component>
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
+      <module name="bookloverbox" options="-parameters" />
       <module name="orderitem-service" options="-parameters" />
       <module name="spring" options="-parameters" />
       <module name="spring (1)" options="-parameters" />

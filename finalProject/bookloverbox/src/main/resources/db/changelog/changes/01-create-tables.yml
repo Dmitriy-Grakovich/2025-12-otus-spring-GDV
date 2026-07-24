@@ -1,0 +1,51 @@
+databaseChangeLog:
+  - changeSet:
+      id: 1
+      author: dev
+      changes:
+        # Таблица пользователей
+        - createTable:
+            tableName: users
+            columns:
+              - column: { name: id, type: bigint, autoIncrement: true, constraints: { primaryKey: true } }
+              - column: { name: email, type: varchar(100), constraints: { unique: true, nullable: false } }
+              - column: { name: password, type: varchar(255), constraints: { nullable: false } }
+              - column: { name: full_name, type: varchar(100) }
+              - column: { name: is_active, type: boolean, defaultValueBoolean: true }
+              - column: { name: created_at, type: timestamp, defaultValueComputed: CURRENT_TIMESTAMP }
+
+        # Таблица ролей (справочник)
+        - createTable:
+            tableName: roles
+            columns:
+              - column: { name: id, type: bigint, autoIncrement: true, constraints: { primaryKey: true } }
+              - column: { name: name, type: varchar(50), constraints: { unique: true, nullable: false } }
+              - column: { name: description, type: varchar(255) }
+
+        # Таблица связи пользователей и ролей (многие ко многим)
+        - createTable:
+            tableName: user_roles
+            columns:
+              - column: { name: user_id, type: bigint, constraints: { nullable: false } }
+              - column: { name: role_id, type: bigint, constraints: { nullable: false } }
+
+        # Внешние ключи
+        - addForeignKeyConstraint:
+            constraintName: fk_user_roles_user
+            baseTableName: user_roles
+            baseColumnNames: user_id
+            referencedTableName: users
+            referencedColumnNames: id
+
+        - addForeignKeyConstraint:
+            constraintName: fk_user_roles_role
+            baseTableName: user_roles
+            baseColumnNames: role_id
+            referencedTableName: roles
+            referencedColumnNames: id
+
+        # Уникальность пары (user_id, role_id)
+        - addUniqueConstraint:
+            constraintName: uk_user_role
+            tableName: user_roles
+            columnNames: user_id, role_id
